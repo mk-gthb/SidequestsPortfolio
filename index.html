@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mana’s Very Casual Portfolio</title>
+<style>
+  :root {
+    --wall: #aca69c;
+    --ink: #211f1b;
+    --ink-live: #211f1b;
+    --faint: rgba(33, 31, 27, 0.55);
+    --margin: clamp(24px, 5vw, 64px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--wall);
+    color: var(--ink);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 1.6s ease;
+  }
+
+  ::selection { background: var(--ink); color: var(--wall); }
+
+  /* ---------- intro ---------- */
+
+  /* one woman, three ways: the triptych fills the first viewport edge to edge */
+  header.hero {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    margin-bottom: clamp(70px, 9vw, 140px);
+  }
+
+  .triptych {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    min-height: 0;
+  }
+  .triptych figure { overflow: hidden; line-height: 0; }
+  .triptych img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-band {
+    text-align: center;
+    padding: 26px var(--margin) 30px;
+  }
+
+  h1 {
+    font-size: clamp(30px, 3vw, 44px);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .intro {
+    margin: 9px auto 0;
+    max-width: 760px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  /* ---------- section headers ---------- */
+
+  h2 {
+    font-size: 28px;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    color: var(--ink-live);
+    transition: color 1.6s ease;
+    padding: 0 var(--margin);
+    margin-bottom: clamp(36px, 5vw, 70px);
+  }
+
+  .sub {
+    padding: 0 var(--margin);
+    margin-bottom: clamp(36px, 5vw, 70px);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--faint);
+  }
+
+  /* ---------- spreads ---------- */
+
+  .spread {
+    padding: 0 var(--margin);
+    margin-bottom: clamp(90px, 11vw, 160px);
+  }
+
+  .gap-l { margin-bottom: clamp(110px, 13vw, 190px); }
+
+  figure { line-height: 0; }
+
+  .spread img, .cluster img {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    box-shadow: 0 2px 40px rgba(25, 22, 18, 0.28);
+  }
+
+  .text-portrait canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1152 / 2048;
+    background: #050505;
+    box-shadow: 0 2px 40px rgba(25, 22, 18, 0.28);
+  }
+
+  .center { display: flex; flex-direction: column; align-items: center; }
+  .center figure { width: 100%; }
+  .left figure  { margin-right: auto; }
+  .right figure { margin-left: auto; }
+
+  .w-xs figure { max-width: 540px; }
+  .w-s  figure { max-width: 800px; }
+  .w-m  figure { max-width: 1150px; }
+  .w-l  figure { max-width: 1360px; }
+  .w-cover figure { max-width: 860px; }
+  .w-robe figure { max-width: 960px; }
+  .w-canvas figure { max-width: 680px; width: 100%; }
+
+  .vh { display: flex; justify-content: center; }
+  .vh figure { width: auto; }
+  .vh figure img {
+    width: auto;
+    max-width: min(92vw, 1300px);
+    max-height: 92vh;
+  }
+
+  .bleed { padding: 0; }
+  .bleed img { box-shadow: none; }
+
+  /* mint, on paper: double-page spreads of the printed issue */
+  .paper {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    aspect-ratio: 3 / 2;
+    background: #f6f2e8;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 0 20px 60px rgba(25, 22, 18, 0.35), 0 3px 12px rgba(25, 22, 18, 0.18);
+  }
+  .paper::after { /* the fold */
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 44px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg,
+      rgba(31, 27, 22, 0) 0%,
+      rgba(31, 27, 22, 0.07) 46%,
+      rgba(31, 27, 22, 0.17) 50%,
+      rgba(31, 27, 22, 0.05) 58%,
+      rgba(31, 27, 22, 0) 100%);
+    pointer-events: none;
+  }
+  .page { position: relative; overflow: hidden; }
+  .page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: none;
+  }
+  .page.margins {
+    padding: 6% 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .page.margins img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 0 1px 16px rgba(25, 22, 18, 0.16);
+  }
+
+  .pair {
+    display: flex;
+    gap: clamp(16px, 3vw, 48px);
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .pair figure { flex: 1 1 0; min-width: 0; }
+  .pair.narrow { max-width: 1400px; margin-left: auto; margin-right: auto; }
+  .pair.wide   { max-width: 1400px; margin-left: auto; margin-right: auto; }
+
+  .row3 {
+    display: flex;
+    gap: clamp(14px, 2vw, 28px);
+    align-items: flex-start;
+  }
+  .row3 figure { flex: 1 1 0; min-width: 0; }
+
+  /* collage overlaps */
+  .overlap-up {
+    position: relative;
+    z-index: 2;
+    margin-top: calc(-1 * clamp(90px, 16vh, 220px));
+  }
+  .overlap-up.right figure { margin-right: clamp(12px, 8vw, 140px); }
+
+  /* the show, as a contact-sheet cluster */
+  .cluster { padding: 0 var(--margin); }
+  .cluster .crow {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .cluster .crow figure { flex: 1 1 0; min-width: 0; }
+  .cluster .crow.offset {
+    max-width: 92%;
+    margin-left: auto;
+  }
+  .cluster .crow.big {
+    max-width: 84%;
+    margin-left: 4%;
+    margin-bottom: 0;
+  }
+
+  /* a quiet footnote, set as a colophon under the robe's right edge */
+  .footnote { display: flex; flex-direction: column; align-items: flex-end; }
+  .footnote figure { width: 100%; max-width: 400px; }
+  .footnote p {
+    max-width: 400px;
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--faint);
+  }
+  .footnote a { color: inherit; text-underline-offset: 2px; }
+
+  /* ---------- fade ---------- */
+
+  .fade { opacity: 0; transition: opacity 1.2s ease; }
+  .fade.in { opacity: 1; }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    padding: 26px var(--margin) 40px;
+    color: var(--faint);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---------- lightbox ---------- */
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: var(--wall);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: min(90vw, 1500px);
+    max-height: 86vh;
+    object-fit: contain;
+    box-shadow: 0 2px 60px rgba(20, 18, 15, 0.35);
+  }
+  .lb-count {
+    position: absolute;
+    bottom: 26px;
+    left: var(--margin);
+    color: rgba(255,255,255,0.5);
+    mix-blend-mode: difference;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    z-index: 60;
+  }
+  .lb-close {
+    position: absolute;
+    top: 18px;
+    right: var(--margin);
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.55);
+    mix-blend-mode: difference;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    z-index: 60;
+  }
+  .lb-nav {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .lb-prev { left: 0; cursor: w-resize; }
+  .lb-next { right: 0; cursor: e-resize; }
+
+  /* ---------- mobile ---------- */
+
+  @media (max-width: 680px) {
+    header.hero { height: auto; }
+    .triptych { min-height: 78vh; grid-template-columns: 1fr; }
+    .triptych figure:first-child, .triptych figure:last-child { display: none; }
+    .hero-band { padding-top: 22px; padding-bottom: 26px; }
+    .paper { display: block; aspect-ratio: auto; }
+    .paper::after { display: none; }
+    .page:not(.margins) { aspect-ratio: 3 / 4; }
+    .page.margins { padding: 7%; }
+    .pair, .row3 { flex-direction: column; align-items: stretch; }
+    .pair figure, .row3 figure { max-width: 100% !important; }
+    .w-xs figure, .w-s figure, .w-m figure, .w-l figure,
+    .w-robe figure, .w-canvas figure { max-width: 100%; }
+    .vh figure img { max-width: 88vw; max-height: 74vh; }
+    .overlap-up { margin-top: -48px; }
+    .overlap-up.right figure { margin-right: 16px; }
+    .spread { margin-bottom: 90px; }
+    .gap-l { margin-bottom: 150px; }
+    .cluster .crow { flex-wrap: wrap; }
+    .cluster .crow figure { flex: 1 1 45%; }
+    .cluster .crow.offset, .cluster .crow.big { max-width: 100%; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="triptych">
+    <figure><img src="photos/p01.jpg" style="object-position: 50% 40%" alt="Veiled portrait in black and white"></figure>
+    <figure><img src="photos/zari.jpg" style="object-position: 32% 30%" alt="Portrait with bindi and gold necklace, looking back over her shoulder"></figure>
+    <figure><img src="photos/veil_color.jpg" style="object-position: 62% 35%" alt="Veiled portrait in warm tungsten light"></figure>
+  </div>
+  <div class="hero-band">
+    <h1>Mana’s Very Casual Portfolio</h1>
+    <p class="intro">Hi! I’m Mana. I don’t own a camera, so I borrow my friends’ and follow whatever’s happening: a film set, a magazine shoot, graduation, late-night shows. These are the side quests. Enjoy :)</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- I. the film set -->
+  <section class="zone" data-wall="#514a43" data-ink="#d9d4ca">
+
+    <h2 class="fade">Mi Yaya Film Set</h2>
+
+    <div class="spread vh fade">
+      <figure><img src="photos/p04.jpg" alt="A door standing ajar, a figure moving in the bright room beyond"></figure>
+    </div>
+
+    <div class="spread bleed fade">
+      <figure><img src="photos/p13.jpg" alt="A slate held up in front of a window, the actor in silhouette"></figure>
+    </div>
+
+    <div class="spread pair wide fade">
+      <figure><img src="photos/p09.jpg" alt="A silhouetted head against a glowing pink honeycomb grid"></figure>
+      <figure><img src="photos/p10.jpg" alt="A hand steadying a violet tube light in a dark room"></figure>
+    </div>
+
+    <div class="spread vh fade">
+      <figure><img src="photos/p11.jpg" alt="A lighter touching a candle wick, the shadow of a hand on the wall"></figure>
+    </div>
+
+    <div class="spread pair narrow fade">
+      <figure><img src="photos/p12.jpg" alt="The clapperboard held in low warm light"></figure>
+      <figure><img src="photos/p14.jpg" alt="A gridded softbox rigged in a bedroom"></figure>
+    </div>
+
+    <div class="spread left w-l fade">
+      <figure><img src="photos/p05.jpg" alt="Two people on set, seen through a gap in the curtain"></figure>
+    </div>
+
+    <div class="spread pair narrow fade">
+      <figure><img src="photos/p07.jpg" alt="Camera operator laughing over the rig, black and white"></figure>
+      <figure><img src="photos/p06.jpg" alt="Crew member seated in the garden holding the clapperboard"></figure>
+    </div>
+
+    <div class="spread center w-l gap-l fade">
+      <figure><img src="photos/p08.jpg" alt="The crew huddled at the camera monitor, black and white"></figure>
+    </div>
+
+  </section>
+
+  <!-- II. the mint shoot -->
+  <section class="zone" data-wall="#aca69c" data-ink="#211f1b">
+
+    <h2 class="fade" style="margin-bottom:10px">MINT Magazine</h2>
+    <p class="sub fade">shot for the Winter ’26 issue</p>
+
+    <div class="spread center w-cover fade">
+      <figure><img src="photos/mint_cover.jpg" alt="Mint magazine cover, a gold bangle on red velvet"></figure>
+    </div>
+
+    <div class="spread fade">
+      <div class="paper">
+        <figure class="page"><img src="photos/zari_cover.jpg" alt="Opening page of the Zari editorial, the portrait typeset with the story title"></figure>
+        <figure class="page margins"><img src="photos/sari_white.jpg" alt="Portrait in a white sari with stacked gold cuffs, looking away"></figure>
+      </div>
+    </div>
+
+    <div class="spread fade">
+      <div class="paper">
+        <figure class="page"><img src="photos/choker.jpg" alt="Close-up of a jewelled choker and the gold border of a maroon sari"></figure>
+        <figure class="page margins"><img src="photos/p02.jpg" alt="Small bronze Ganesha figurine on a dark shelf"></figure>
+      </div>
+    </div>
+
+    <div class="spread bleed fade">
+      <figure><img src="photos/p00.jpg" alt="Gold bangles on a wrist at rest, sari and fairy lights below"></figure>
+    </div>
+
+    <div class="spread center w-canvas fade">
+      <figure class="text-portrait"><canvas id="textPortrait" role="img" aria-label="The veiled portrait rebuilt from typeset words, slowly resolving into the photograph and back"></canvas></figure>
+    </div>
+
+    <div class="spread right w-robe fade" style="margin-bottom: 36px">
+      <figure><img src="photos/p03.jpg" alt="An embroidered robe on the wall, seen between printed curtains"></figure>
+    </div>
+
+    <div class="spread footnote fade" style="margin-bottom: 160px">
+      <figure><img src="photos/lotus_eaters.jpg" alt="Opening spread of Lotus Eaters, a Mint editorial in red and teal"></figure>
+      <p>and once from the other side of the camera — <a href="https://www.stanford-mint.com/spread/lotus-eaters" target="_blank" rel="noopener">Lotus Eaters</a>, Mint, freshman year</p>
+    </div>
+
+  </section>
+
+  <!-- III. friends & shows -->
+  <section class="zone" data-wall="#b5afa4" data-ink="#211f1b">
+
+    <h2 class="fade">Friends &amp; shows</h2>
+
+    <div class="spread left w-m fade">
+      <figure><img src="photos/p20.jpg" alt="Profile of a woman smiling, black and white"></figure>
+    </div>
+
+    <div class="spread bleed fade" style="margin-bottom:0">
+      <figure><img src="photos/p19.jpg" alt="Friends behind a Class of 2026 banner, under a balloon arch"></figure>
+    </div>
+
+    <div class="spread w-xs overlap-up right fade">
+      <figure><img src="photos/p15.jpg" alt="Cupcakes topped with congrats grad toppers"></figure>
+    </div>
+
+    <div class="spread left w-l fade">
+      <figure><img src="photos/p17.jpg" alt="Two people greeting each other on the lawn"></figure>
+    </div>
+
+    <div class="spread vh fade">
+      <figure><img src="photos/p18.jpg" alt="A necklace dangled for a reaching baby"></figure>
+    </div>
+
+    <div class="spread cluster fade">
+      <div class="crow">
+        <figure><img src="photos/p21.jpg" alt="An a cappella group mid-song, pointing skyward"></figure>
+        <figure><img src="photos/p25.jpg" alt="A performer leaping through the doorway onto stage"></figure>
+        <figure><img src="photos/p22.jpg" alt="A woman laughing in the aisle after the show"></figure>
+      </div>
+      <div class="crow offset">
+        <figure><img src="photos/p26.jpg" alt="A singer swinging the microphone toward the audience"></figure>
+        <figure><img src="photos/aisle.jpg" alt="Dancing down the aisle in a Stanford sweatshirt"></figure>
+      </div>
+      <div class="crow offset">
+        <figure><img src="photos/singers.jpg" alt="The a cappella row mid-song"></figure>
+        <figure><img src="photos/handhold.jpg" alt="Two friends laughing, hands clasped"></figure>
+      </div>
+      <div class="crow big">
+        <figure><img src="photos/p24.jpg" alt="Two friends arm in arm, one holding a rose"></figure>
+      </div>
+    </div>
+
+    <div class="spread bleed fade" style="margin-bottom:0">
+      <figure><img src="photos/p23.jpg" alt="Hair mid-whip above the crowd"></figure>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="fade">
+  <span>© Mana, 2026</span>
+  <span>36 photographs</span>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <span class="lb-count" id="lbCount"></span>
+  <button class="lb-close" id="lbClose">Close</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="previous"></button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="next"></button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<script>
+  // reveal
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+  // the wall follows the work
+  const zones = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        document.body.style.backgroundColor = e.target.dataset.wall;
+        document.documentElement.style.setProperty('--ink-live', e.target.dataset.ink);
+      }
+    }
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  document.querySelectorAll('.zone').forEach(el => zones.observe(el));
+
+  // lightbox
+  const imgs = [...document.querySelectorAll('main figure img')];
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCount = document.getElementById('lbCount');
+  let cur = 0;
+
+  function show(i) {
+    cur = (i + imgs.length) % imgs.length;
+    lbImg.src = imgs[cur].getAttribute('src');
+    lbCount.textContent = (cur + 1) + ' — ' + imgs.length;
+  }
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  imgs.forEach((img, i) => img.addEventListener('click', () => {
+    show(i);
+    lb.style.background = getComputedStyle(document.body).backgroundColor;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }));
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+  document.getElementById('lbPrev').addEventListener('click', () => show(cur - 1));
+  document.getElementById('lbNext').addEventListener('click', () => show(cur + 1));
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+
+  // text portrait: the veiled portrait retypeset live, breathing back into the photograph
+  (function () {
+    const canvas = document.getElementById('textPortrait');
+    if (!canvas) return;
+
+    const TEXT =
+      'Indian households hold an estimated twenty-five thousand tonnes of gold, the largest private store in the world. ' +
+      'Stridhana is a woman\u2019s own wealth, given at marriage and held apart from her husband\u2019s estate. ' +
+      'Under classical Hindu law it passed from mother to daughter, outside the ordinary line of inheritance. ' +
+      'Bangles are among the first gifts a girl receives and among the last things a family will sell. ' +
+      'Wedding gold is savings as much as ornament; it can be pledged at any pawnbroker in the country the same afternoon. ' +
+      'In 1991 India flew forty-seven tonnes of gold to the Bank of England as collateral for an emergency loan. ' +
+      'Rural families still keep the larger part of their savings in metal rather than in banks. ' +
+      'A bride\u2019s jewellery is weighed, recorded, and remembered for generations. ' +
+      'The traditional purity of wedding gold is twenty-two carats. ' +
+      'When a bangle is melted and remade for a daughter, the weight is kept the same. ';
+
+    // p01's luminance, pre-sampled on a 132x234 grid (6 bits per glyph cell), inlined
+    // because pages opened over file:// cannot read pixels back out of a canvas
+    const COLS = 132, ROWS = 234;
+    const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    const LUM = 'yxaXcYZaaZZYZXXXWYYZSWYXXXVZVUWWWVWVVWWVVVVUVWVUUUVUTSRSSSSSRPRRQSRSSRVWRRSQQRPQPPQQOONNNMMMMMKKLKKJIJIIIHGGGGGFFFFFFFFEEEDDDDDDCCCCtpWbbZaaZZZZYYXWXYYVRYYXYWVYUUWXWVVVWWWWVVVUVVVUUUUTSSSRSSSSRSRQSSSSUUZcSRSRQQPQQPOPPNMNMMMLMMLLLKJJIJIJHHHGGGGEFFDFFFEEEECCDDCCCCCCvfWcaZYaaZZZYYXXYWYTTZYXXVWXUVXWWWWWWVXXVVVVVUVUTUUSSTSSTSSRRRRRSSSTTWhjQQRRPOPQQPPQONONMMMMKKLLKLLJIIHHHHGGFGGFFFEEEEEEEDDCCCCCCCCBpTZcZYYaaZaZZXWXXVXSWYYYWUYWUVWWWWWXVWVWVVVUVVUUTUUUVTSSUSSRRRSSSRSUVYZUPRRQQPRQQPPOONOONLLMKKKJKLKKJIHHHGGGFGFEEFEEEEEEDDDDDCCCCCBBhRabZYXaaaZXYXWXWXXSYXYXXXYUUWWVWXWWVWWVUVVWWUUVUUTTUSSRSSSRRSRSSTRVXWSQRQSRRRQOPQPOOMMNNMMLLLKJKKJJKIJHHGHGGFFEDFEEEEEEDCCCDCCCCCBBcTccXYZbZaZZYXYZWXVUaXYYWYXTVXXVWWVWXWWVUUVWVUUTVUSTTTTTSRRSSRSURRQTaTQSQRRRRQPOPPPPPNMNMNLMLKKJIJJJIIJHGGGGFFEEEEEEEEEDDDCDCDCCCCBBZYdbXYabaZYZYXYXXYTWZXYXWZWVXWWWWWWVVVWUUVVVUVVSUVSSSSSTTSSSSRTSSVWYYXXUSRQPRQQPONPPOQNNMMMLMKLJJJKKIIIHGGHGGGFEEEEDEDDDCCDCCCCCBBBBUbcaXYaZaaZZYYXWYYRXaYXXXaVXYWWWVWVWWWUUVVVVTVTTUSSTTSSSSSSSRRTRTaWYgZWURRRPPQQOPONNNOMLMMLLKKKKJKJIJHHHHHGGGFEFEDDEDDDCCCCCCBCCBBBBWccaYacaaaZYXZYXYWTaYXXXZYVXYWXXWWVWXVVVUUVVVVUUTSSSTTTTQRSRRTTTXVZcjWVVSQQQOPPPOOONMMLMLKKKLKKKJJJIJIIHGIHGGFFFEEEDCDDCCCBCCCCCBBBBXcdZXacaZaZYWZXXYVVZXXYXZYWYWXXWXWXWVWVVUVWUUUTUSSSSSUTTSRUSSTVaVZbowYTYUPQPOQOPNMNNMLLMNLKKKKKJIJIIIIIHHHGHGFFFFEFDDDCCCCCBCCCBBBBBXbcXXaaaZYYWXXXYYUWYXYYXYXWXXWXWYWWXVWUTVVWVVUTTTUTUUTTSSSSSTUYXXZZeeTUWSRQPPPONNOONNMNNLLLKLKJKJIIIIHHIHHGGGFFFEEEEDCCBCCCBCCBCBBBAbcaWZbaaaZYXYYXaXSYYWYZWZYXXVWXWWWWVVVTVXVVUTUVUTTUSSUUTSTTUTWZVZZaYUUYTQQQOONMMNNNNMNMMMLLKKKIJKIIJHIGHHGGFFFFFEEFEDDCBBCCCBBCBABBBcbaYbbaaZZYZZYXYUVYXXXYYYWXYVWWWVVWWUUVWWVVUUUUUTTTTSSUTUUUVVXZXWZYUWYXTRPQOONNNMNNNMLMOMKKLKJJJJKJIIIGIGGHGGFGEEEEDECCCBBBBBBBBABBBcbZababaaYXYYXYXUYZXXXYYXVXYXVWXVVVVVVVVVVVUUUUVUUUUTTUUUSagYVWZWWVXYWUSPONNOOMNMMNONLMMLLLKLKKJIKJIIHHHFGGFEFFEFFEEEDDCBBBBBBABAABAcbabbZZbbYYZYYXVUZZYYWYYYXYXWVVVVVUVWVUVVVTTVUUUUUTTVVUUWWYWVTVZbYWXVVXTPPNNMNNMMKMNNLLMMMLKLKJJKJJHJHHHHFFGFFFFFEEEEDDCBBABBAAAABBAbbcabYZaZYZYZZXVXaYWXWXYXXZXWWVVVWWVVWWWUVTVVUUVUTSUVUWXXYUTTTUUYWUVVWYSQOOPOMMLLMLMLLLMLLMLIIKJKKJIHHIHHGFGFGFFGFEEDDDCBBAABAAAABAAbabaZZadYZZZZXXWXYXXXWYZXXXWVVVUVVVVVWVVVVVVVUTUUUUVUWYadWTUSTTTUUUUVVRTUNNOOMMNMMMMLLLLKJLLJJJJJJIHIHIHHHHGFFFFFEEEDECCCBBAAAAABAAAbcdZYYacYZYYYWYVYYYZYVZZXXVXVVWVWVVVWWVYWVVXVTTSUVVVUWVYleTTTUSVWWXXWVTVTNMNNLMNNMMLKKLLLJKKKKIKJIIIIIIHHGGFFFFEFDDDDDDDCBAAAAAAAAAAbccXXZcZYZZZXWXVZYYZYXYYYXWXVWUVWVVWWWWXVUUWUUUUVVWYaabammUUSTTWZZYYWVTRQONNONKLMLKLLLKLKLJLJJJJJHIJIKIHHHGFFEEFFEEEEDEDDCABAAAAAAAAbdZWZbcYZYZaXXXXZXXYXYYYYWWVVVVVVVUVVVWVUVVUUVUVVVaaaaVYYYWUWVWYZWVdZZUUQOPNOOMLLMLLLKKKLKJJJIJJIHIIIJHHHGGFGEEFEEEEEDEDCCAAAAAAAAAAcbVWZdaYaYZZZYWZZXYYWXYZZWVVVVVVVUVWVUWWWVUVUTUVVYZYYWVZaYbWacaXWWXbaXXUQOOONNLMMMLLJKKKLJKJJJIKIIIIJIHGHGGGFFFFEEEEDDDDCCBAAAAAAAAAeXUYbdZYZYYYYWWZYYYWXYYYWWWVWVWWVWWXWWVWVUVVUUVWVacWVZZZcigUXYZcYXZiiVWRQOONNMKMMLNMKKKLKJKJJJJJHHIHIIIHHFGGFFGEDEEEDDDDCCCBBAABAAAAdSVZcdYXZZYYYVVYXYXXYZYXVWWWVVVWVVVXXVXWVUVUUVVXXYccXZYYesbcZXZXXWXspTRPPOTOLLLMMMLMLKJKLKJKJJIJIIIIIIIHGGHGGFFEEEEEDDCDDCBCBBAAAAAAYQZadZWZbZZZYWVXWYYZXXYXXWWVVVVVVWWWVVWVVVVUUWWXYcaaZWbdZWYcYaVXWadaXQQQRTQUMMKKMMLKKKKJLIKKJJJIIIHJHJHHFHGGFGFFFFDEDDCDDCCBBBAAAAAARTcbcXYaaYYYYWVYXYYZWWXYXVWVVVVWVVVWWVVWWVVWWXYYYaeYXagbUXabccVXVaYTSQRQSZQSMMLLMLLLKLKKIIKKIJIIJJIIHJHIHHGHGGEFEEEDDDDDCCCBBCBAAAAANYadbWYbaYZZYVVZYXYWWVWXWVVVWWVVVUVWWVVVWWVWXXabWaliWXVYXZblfVYYWTRRSTTTVVPQJKKKLLMLLKKLIJKJIIIJJIIHHHGGHGGGGFFFEEEDDDDDBCCBBBAAAAAAQbadYWZdYYZZZVVZZZZWYWWXXVUWVVVTVWWVUVUUVVWYaYZegenjVYZbUXigbZYUUUSTTSTTUPSQKJLKKMLMLKLMHJLJJJJJIIIIHHHGHGGGHFGGFEEEDDDCDDBBBBBAAAAAXaccWXabZYYZYUXZYZXZXWYWVVWWVXWVVVUVVVVVWWYZZbdhlmofaXZbabafcZWUWWWVbaVUXQOLKKLKKLLLJKMLGKKKKIJIHIIIIHHGGGGGGGFFEEEDDCDCDDBCCBBBAAAAbaeaUYaZXZZZZUYaZYXXXXWVVXWVWWVVVUVVVUVVXYZbbcbdheedcYjihkaZUTWVUXeWaYUSSPMLJMLJKLLLKKMHHKKLJIJJJJJIIIIFGGGGFFFFEEEDDDDCCCCCCCBAAAAAacdYXbaZYZYYVTZbZXYXXYWWVXVWWVUUVVUUVWWVXabddccZZYXaZakkZVVhXYXVXbjVUQORPNLKLKLLLLLJKLLFKLIKJIJIJIHIHIGGHGGHFGFFEEEDDEDDCCCCCBBBAAAAYecXYaaaYYZYVVbaYYWWXXWXWVVWVVUVXVUUVXYWZbdddddfXcbbcchbYVehXWnhZYZVVVQSPKMLKKMMMMMLLMKDLKJJIJJHJIIIIHHHGGHFGFFFDEDEEDDDCCDCBBBBBAAAZeYWZZaZXWZYTVcZYYXXYWVWVUVWWVVVWVUVVWYaddcqkghebdbabeZaWahkdVhfaYYYZkVLKUNLLLMNNNNMLNHEMJJJIIIIIIIHIHGGGGHGGFFEEEDEDCDDDCDBDCBBBBAAccVYaabaYYZXRYaZaXWYYVXXXWWWVVVVVXVWXZaccdchgnlbdcbfeeaZZbajcWWbbbZTaVSNJONLKJLLMMMNOPFHKKJJJIIIIIIIHHHGGHGHGGGEEEFEDDDDCCCCCBBBBBAAeYYZbbaZZaaVTaYaYXWYWWYWWWVUWVVWVVWWWZcccddcegcccYYcbYaYcccZVVRTVVXRRSSOMLMJKKLLMLMNPKDLLJIHJJJIIHIIHHGHGGGHGGGEFEEEDEDECDCCCBCBBBAAcVYYbaYYaaYTXbYYWXWWWZYWWVUUVVVVVUWXXacdeefggfaeecZdZYbbchdUUXeXbWQRPQTSNLKIKJLKLLNNPGFNMJJJJIJJIIGHIHGHGHGGGFFFFFEEDDCDDCBCCCCBBAAAZVXbbZYZZZYSabaYXYWVYYYWWWWWXVVWWWYYacdfeggghfbkshbebcgfYWYUTkpflZURQOTTMLLLLJLJKMMOLEIOMLJIIHJIIIIGHHHHHHGFFGFFEFEEDDDCCCCCCCCBBAAAVWadbZXZZaVRcbaWZXVWYXZVWWVVVVWWWYWabcfgfggghgdfncbbbkobXYVWXZZflWSRPRVTNKLMMKLLMMNOIEMOMLKKIJIJHIIHHHHHHGHGGGEFFEDDECCDCCCBBCBBBAAAWYcaaZZYbXRXbZVXXVWXYZXUWVVUVVVWWWYceeffffghghhkhYbcdgkdaWTfbafhaSQSPPSTSPQPOMMMMMOOGGPMLMKKKKJIHHGHIHHHHHHHHEFFFDEDDDDDCCBCCBCCBAAAXbdaaZYZZVTbbYVXXWVWZYVVWVWWVWXWVYaeefgfggggghikicZYacigbXYndZelWTRPONPQTSSQONLMMNONEIPMLKLKKJJIHHHHHGGHGHHGGEFFFEDCDDCECBBCCBBCBAAAabXYZXYaXUXcYYXXVXXYYXVVVUWVWVXXWbdeeeffgiiggghedaZcZknibWXZYTTXURPONNNOQSRQNONMLNPMDJPLKKLLKJKJHHHIGGIGHIFHHEFFFEDDEDCDCBBCCBBCBAAAccWZZYYZVVabYXZYWXXYYXVVTUVVVVUXYcdeefdghhhghhhhechhhm3sYVVYURRTQPOPRPOPPRPPPNONLLPIEMNKKKLKKKJJJIHIHHHGHHFHFFEFEDDDECDCDBBCCBCBAAAAeZXaZaYYWVcaXXYWXXVYZWVUVVWVVWVYaddfgheghhhhhgiiiijijp4pYWVVVQRSTRTUWTRSQSRPOOMNMNNGHOMKLMLLKKKJKIIHHHGHHHGGEFGFEDCDCDCDCBCCBBBBAAAAcWZZYZZXUZcaWZYVXXWZYXVVUUWVVVWbbefffgggiihhhiijijjklkicXWUUUSQRTVVWVVUUSSRPNPMNMNNFKOLLLMLKLLJKJIIIIGHIGFGFFFGEDDDCDECDECBBBBBAAAAAaXZXZZbVUacZWYXWXVWaXWTTUVWVWXXaceefhgfhhhhhihhiijjlmidcaVUVSPQRQSUWVVVTTSQRQOONLOMFLOMMLMLLKKKJJIIJIHHIHHGFEFEFEDDCDDDDCBBBAABAAAAAYWXYZaeVVYaYYXXVXWYYYVSTVUUVVVZcefeghggihghghihhijjjlifobVVVRQQQQPSVVVUTTSRQQPOMLNJGMMMLLMLMKKJKJJIIJGHHGGFFEFFEDDDCDECDBBBAAAAAAABAXVYaaZaVTZaYYXWZZXWXXVSTUVWVVVaedfggdhihhgihihghjkkjkigeWZWTRQPPQQRUVUTUTSPQQOONMNJKOMMKMMMLLLJKJKJJJHHHHHFFFFFDEECDCCCCBBBAABAAABAAVXZYabZUUbcYWWXZYYWXXTTUTVYVVXbeeefgfggghhhghhiijjkkjhhaZWSRRRPQPQSUUUUTTQQRROPNNNIKMMLLLKLKLKKIJJJIHHHHHGGEGEEEEDDCCCCBBBBAABAABAAAVXaZZbZSTcbZWVYZYXWXWSSTVWWWWaeedefghggghhihhiijjjkjigfecYVSRRQQQRTUUVUTRQQRQNNNMMJJLKMLJLMLKKIIJJJIHIIIGGFFGEFEDDDBCCCCBBBABBAAAAAAVYaYacYOVeYYWWaZXVXXTRRVXWVWWbfeffgfhgfghhhgjighghigghdccdbXTSSRSVVUTUTRRQRQOPNMMLJLKKKLLLLKKKIJIJKIIIIGGGGGGEEDDDCCCCCBBABBABBAAAAAWXYZcbTNbdYXXXaXVVYYTSSYVVWWXdeffhhghgfgggeeeghfghhijgfdeeffbYTSUWUUUTSRRRRPPPPMNLLLKKMLKKMKKKKKJJJIHHHIGFGGEEEFDDCDCCCDABBAAABBAAAAVWYcdcUTdaYYWYZUVVXXVSUUUVWXZeeffgggggghfeffhhihghhhihfeeffhfcYUWWVTUTTRRSQOONOMMKMKLKLJLLKKJKKKKJIIHHIGHHFFFFEEDDCDBCCBBBAAAABBAAAAXXegghYVdZYXXaVUVWXVVSTVUWVXadegfhghiiihhihhjjigijkjhjgfffhfcdbXWXWVVTSRRPQOONMMLLLLMLLMMLMKJJKKJJIJIIHGHFGGFEDEDDCCCCCBBBAAAAABAAAAYYhjkjaZeZYXbWSUXWWUTSUWVVVYdeefhhhiighhhihijkiiiiklkihffgheedcaYZXXVUSSSPPOONNMNNJLLMLLKLMJLKKLJLIJIIHHHFHFFEEDDCCCCCCBBAAAAAABAAAAWajkljaficWbXTTXWVWUUTVWVVWZfeefggghfgihhhhhjjjkihijjihgghifefdaZZYWVUTSSRQNPONNNMJMLNKKKKKJKJJJJKIIHJJHGHFFFEEEEBCCBBCBBAAAAAAAAAAAWbiorojlogcYUSVYWVVVTUUVUWXYffghgijghhhihhhjkikkjjkjiiffhjjifcbbbZYVWVTSSQPOOONNNLLLMLJMJKKJKJJJKIIIJJHIGFGFEEDDDCDBBBBBBAAAAAAAAAAAWbhnqsmlnhbSSTXYXWUVSVUVVVVbefgghhiihihhhgikkjkjijjihhhdfgggdbbcabaVVVTSSPQOQNNNLLLKKKMMLMLJKKKJKIJHIHHHGGGEGEDFDDCBCBBBAAAAAAAAAAAAYcjkmkeihcVOSXYYYVVUUUUWUUWdgggfhiihgiihggjkjkljjjjjiihefefebZbcbaYWWUTSQQOOOMNNLMLKKMMKKKLJKKKJLJIIIJHHGGGGGEDDDDBBBABBAAAAAAAAAAAAYdljkccgeXONVYYZXUVTVVVVTVYffffghgihhigihhgjjjlkkjiijigfefcbcaccaaXVWUSRQOOONMOMMLMMLLKLLKKJLKIKKJIIJIHGGHGEEEDDDCBBBBBBBAAAAAAAAAAAWgnolegfZSNUZYYXVUTVVVVTTTZeeghhhhgihhghfghiiihjjighijifcedcaZbaZZWWUTSSQPOOONMMMMNMLMMLLLKKLJIJKJJIIIHIHHFEFCFECCBBBBBBAAAAAAAAAAAAUfqsnmmfWSQWaYYVUUTUUVVTUTbehgghhhhhiiihgfhigghiiggiihgeccbabbcaaYWXVTSRQPPMOOMMLLMMLLMLLLKKJJJKJJJHIIIIHHEDDCECCBBBBAABAAAAAAAAAAAARckmkjmiVSTYaWYVVTVUUWTSTVehgfhgihiiiiihghihhhihhgghiigeddZccabaYXXWURSRQOMNPOOLLLMLJLMLLLLKJJKKIKIJJHHIIEEDCDECCBBBAAAAAAAAAAAAAAAAVbbddddZTUTaZWWVVVVTVUSVSWeffghihihiiiggfhhhihhhhhgiiifdbbbdbbaaXXXWSSROPOMNPPOMMLLJKKJLMMLJJKKIIIJJJIIIIFEEDEDDCBBBAAAABAAAAAAAAAAAYYYcbWWXVVVaYXXVWVTTVSUUUXfhfffhgghihhgfeghhggggfgeggffecbbcbZYYXWVUSQPOMNONOONLLLLJKKKMLJJJJJIHHIJIIHHJIGDEDEDCCBBBAAAABAAAAAAAAAAAVVacWSYYVTVbYVVVWUUUVTVTTZddccfeeffhfdedegghfgfffgddefcddabaaYYXVVTRTRONLMNMLLLMKKJKKILNJKJKJHIIFIIIIIJIIFEDDECBBCBBAAAAAAAAAAAAAAAAVXbXVYXYUTZaWVUWWTUUVUTUTYabbZaZceddcbaZbcffeecffeefeecbaZbaZYYYUSSRSPMLJLKKKLLKJIHIIHMLJJLIHIIHGHJIIHJHIEEEFDBBBBBAAAAAAAAAAAAAAAAAWZWUXZYYSTaaVTUWWSUTUTTUVZYYYZYWZbaaaYYWYZcbdccffeeedbdcbaZaZXXXVTPPPNLLJJJKIKLJJIIIHJLJJKKHJIIHGHIHIIHIIEFEDBCCABBBAAAAAAAAAAAAAAAAbWTYaZXWSWZYVTVVUUVUVUSTWXYXXYXYYZZZYXXWWYaaccccfdeedZbabZaYYXWVTPPPNMKKJIJLIKKIJHHHILKKKJJHKHIEGHHHHGHIFFFDCCCBABBBAAAAAAAAAAAAAAAAXSXbaYYXSXaXUVWWUVVTVUTVXXZYYZZYZZZZVXVWWYaZbbccddecdYaZaYYXWWVVRPOOMKJKKHIIIJJJIHJHKLKJIKJIIGGGHIIJHHIIFEDCCBBBBAABAAAAAAAAAAAAAAAAVUZaYYYVSYaXUVUVVWVUUTUWWYaaYXYbaZXXWWVXXYYZbabdbcdcYZcZZZYWWWVUROONMMJKIIIHIIIHIIIHKLJIJKJIJHHHHJJIHHIHFECCCCCBAAAAAAAAAAAAAAAAAAAAUVbZYXXUTZXWVVUVVVUVUUVWZaabcYZbZZXXXVWWWWZZbbaabddcaZaaZaYVXVVTQOOLMKIJHJGGIJHIHHIILMJJLJIKHIGFIJIIGIGHFECCCCCBAAAAAAAAAAAAAAAAAAAAUZaZYWYUUYWXTTWVVVVUUUVWYcfgffdbaaXXXWWVWYXYabaacdabZZZZZYYXVUUSONMMLJJIHIIGHIHIIKIJMKKLKJJIJIHJIJIJGIHGFDCDCCBBAAAAAAAAAAAAAAAAAAAAWYaYXYXTVYXVSUWXWWTUUVVXceghggeddcaYZXXXYYZaZaaZbcaZZZaYYXXWWURPPMNMLJIHGHIFGIIHJJJJMKKKKKJJKIIJJJIJGIIHDDDEBBBBAAAAAAAAAAAAAAAAAAAAXZZWYaWQWXWUUVWWWWUTVVUXffeffdfdcbZYZaYXYZZYYYZZbcYYaaYYWWWWWSQQOOMMLJIHHIGHGIIJKIJLLLLKJIJKIIIHIKJGIHIECEGDBBBBAAAAAAAAAAAAAAAAAAAAZaYWZZTSWXVUTVXWWUVSUUUYeffffddccZZaaYXYYYZXYYXXdbXZaZYWWXXWURPOONKJJKHHHHGGHHIKKHKMNMLLKIKIIIIHHKIIGHGDFFFDBBBBAAABAAAAAAAAAAAAAAAAZbYXYXTSXXTUVVVVVUVTUUVWdgcccbbbaYYZYXWYYYZXXWWYdYWYZZYXXXWUTRQPONKJIIGHGGHGJHJKIJKKLLLLJJIJIIHHIIIIFGEEHFECCBBBBABBAAAAAAAAAAAAAAAAZaXZZXUTXXUUWVXVVVUUUUUVdfdbbbaaaXWXXWWWVWYXWVVZbWYZZYYXXWVUSRQOOJIJIIHHGGGHHIJJHJKLLLLKJIJKIHHHIJKHFFEGGEDCBBBBBAAAAAAAAAAAAAAAAAAAZZXZXWSSXVVUXWVVVVUVWVUVbdcaaZZZaYXXYWVXWWWVVWVZYWZaabZXYWVTSRONMJIHIHGGFFHIHIIJJKKLJKKLKIKIHHGHIJIGFEGHFFDCCBBBBBAAAAAAAAAAAAAAAAAAbYZYWWRTXWVVXVVVUUTUUVUWacbbaZaYZZbbbaZaYXVTTUVZXXZaZZZYYXVSSQONKJJIHGHGFGIHHHKKLLLKMMLNKKIHHIHIHIJFDFHGFFDBCBBBABBAAAAAAAAAAAAAAAAAZXXXWTTWWVWWWWWVUVVVUUVVYbaaZZZZbccdccbaXXWUTSWZYYYZbZZZWVSSSQOJJJJKGFGEFHHGHJJJLMONQOOMKKKIIJIIIHGEDGGGGFDCBBBBBBAAAAAAAAAAAAAAAAAAZWYVWSTVXWWWWVWWUWVVVUUUXaaZYXZbbcccdbbaYXWUTTUWXXZaabaaZXTSTQOKJJJIFGFEGHHHJJILNSRRQRONMLKJHIHIIHGDEGGFFFDBCBBBBAAAAAAAAAAAAAAAAAAAXXYWUSUWXXVWVXWVVVUWVVWWXZZYZXaaaabdbaabYWVUTTTTVYZabbbZaXVTROMJIHKGGGEEGIHHHJLNRUUSSSONJJJHJKIHHGEEGHGGGECBBBBBBAAAAAAAAAAAAAAAAAAAXWXUSRVXYWVWWWWVWVUWVVXWVXYYYXYYYYZZWXWWWVUUSTUSTXYabcdbZYWTQPNLIHIHHDDFHHHHIJNQRUVSOMNLIJJIIHGIGFGEHHHGECCBCBBBABAAAAAAAAAAAAAAAAAAXWWSSSUVYWWWWXWVVVVVVXXWXWYXYYYYXWWVUVVUTTSUSTURRWYbbcdedZUSRPLKHHIIFDDEHHHHJMPSSRNLLJJIIKKIIHHJDGGGGGHGDDCCCCBBAAAAAAAAAAAAAAAAAAAAWVSRTTVVVXWWVWVWWVVVVXWVXXYYYYXWWXVVWUXdVRRTQSSQRVWZbddfcXUSRPLJGFHGFDEFHHHILPQQNLLLJIILJJJHHHIGEHGFGHFEDCBDDBBBAAAAAAAAAAAAAAAAAAAAWTUUTSWVWYXWVWVWXVUVWVWVWWXYZXYWYbdcbVWXTRTTQQQPRTVZdbcdZWTSNLKHHGGGDDEHIIHJNQOLLKKKNNMMKJIIGGIGGFGHIGGEDCBCCCBBBABAAAAAAAAAAAAAAAAAVTUTSVVVXYVUUUVVVWWVXWWXXXXXXYWXadfeZVTTSRSRRRPPQSWYdddcZVTPMNKGGGFGEEHJHIIKPNLLMMORTRJIJIJHGHIFEHHIHGFEDCDDCCBABAAAAAAAAAAAAAAAAAAAUUSTUUUYYXVVUUVVVVWXWWXYXXXYWYWYddeeaVVTSRRRRRPOQSUXcdbaYURQMKHGFGFFEEIIHIHMMMMNMPUWVPKKIIIHGHGGGHGGHFFEDCDDDBAABAAAAAAAAAAAAAAAAAAAUTSTTUXZaXUUVWXVVXYXXWXYWVVZZZYZeeeebUUSSSRRSRPNNRWacdcaVURPLIHGFHEEFFHIIIHKLLLMRUXYUQKIIHHHGGGGHGGGIGFFDDEECBBBBABABAAAAAAAAAAAAAAATRTTUVXZYWVUUVWVVXYXWWYYWWWZaYZaeeeebXUUSSSSSRNMOSYbdcaYVSPOJGHGHHEEEGHIIIIKLKMRUVXYTSMHIHHIGHHIGGGHHFFFDEEDBABBBBBBBABAABAAAAAAAAAASRRUUXZZXVTVUUWWWYZXWYXXWWZZbaXZdffedZVTTSRTROMNQRYccbZWTRNLJFGGGGFFGGHIIHIKONOUVUVVUSOIGGJIHHIGGHGHGEFEEFECBBBBBBBBBBBBBBAAAAAAAAAARSTVWXXYXUUVUVVVXZaYXXXWXWYaaaXacfedcbYSSRSSPNNOQVcccbWUSROMJGFGHGEFGGGHIIKLNOORVWYVURRNGIJHHHHGHIGGGFGEEEDCBBBBBBBBBBBBBBAAAAAAAAAASUUUWXYYVUVUUVVWWZZYZXWXWVXbcbZYZaccbcaXVUTPPQSUVaeaaYTTROOMJFEFHFEHHGHJHJMTTQRTRPRURPQNLJJJHHFGIHGGGHGEEECBBBBBBBBBBBBBBAAAAAAAAAAAUTTVWYZXUVUUVUWWXZZZZYYYWXZabaaYXXYZYZZaYXVSTUWVYccbZVTTPNMMHFEEFGGGHGGHHJMTVTWXWPPONLKKKLJIIGHHJIGGGGEFFDCBBBBBBBBBBBBBBBAAAAAAAAAAVUTWXXYWVWTVWWXYYaaaZXYWWYZbabcaZYXWXXVVWVSRSSTVcedbWUTSOLMKFFEEFGHGGHHHIKMQSTRRRRROMNJKJKJJJFHHIHHHHHFGEDCBBBBBBBBBBBBBBBAAAAAAAAAAUTWWYYYVVUTUVWXXZabbaZXWWZaaacdcaYYZXVVWTSRRSSUafdcYUTSQNJLIFEFEFGGHHHHIIJNQRRRSRQOMLMMLKKJHHIGGHIHGHGGFDDCCBBBBBBBBBBBBBBAAAAAAAAABTTWWYYVUUVVVVWXYbaaaZYXXXZaabcdcaYYZXWWUTRRRSTYddecXVTSOLKKHEEFFHHGIHHJJKKNSUSRRRQONMLLLKKJIJIGHIHGHHFFEEDCCCCCCCBBBBBBBBAAAAAAAAADDTTWXXXWVVUVWWXZZaaaZZXYYYaZabdfcbbZYWWVUTSQRUZcffeaWURRNLIJGEEEGIGHHGJJJJLORVWUTQONNNLLLKLJKHHHHHIHHHFFFFDDDCCCCCBBBBBBBBABAAAABACDAUUVYYWVVUTVWVXZabaZYYYXWYaabcdefdaZXWVVUSSUXbfggieaVRQPNJHIGFGFGIFHGJKKLMNOSVWWYTSOMLLKKKKKJIHJHHGHGHHFHFEEDDDDCCCCBBBBBBAAAAABCBCBATVWWVWVTTVVYWXZaZaZaYWWXZZaacdeeeddaYXVWYZbeeeghieZUSQOLIHHGEFFIHFGGJMLLNLPSUSVWUUSOMMKJJIKJHIIHIHHGGIHHFFFFEEDDCCCCCCBBBAAAAABBCBBBSVYWWVUUUWWWXYZZZaZZZXXYZZabefggffeccdbcdfffedgiidYSRPNLIHGFEEFHGGGHKMMOONORSVVVVUURQRONMLMKKLJKJJJIJJIIIGFFEEEDDCCCCCBBBABAAACBBBBBSVXYWVVUVWVWXXZZbaYYYXXZZaabefgigfgffefgggfgeegkjaVRPNMIGGFEEEGFGFGHKMOPOPPQRUUUWVUTSSSSPQPPQPONNMMNMLKJHHFEEDDDDCCCCBBBBBBAAABBABBCVWXXWWVWWXXWXZZZZaZYXWXYZbbcfghgfggffefffddeeejlhYVRPMLHFFFEEEFFFFGHKMNNOQQQRSTUVVTTTSSRQRRSSSQPOOPOLLLIGGFFEEDDDDCCCCBBBBBBBBABBBCBVWYXVVUUVXXWXYYaZZZYYXXYZabeghhfggggfeeefcefddjieXUPOLJGGFEEDEFFFGHJJLNPQQRRRRTTSSSUTSRRRQRSTSSPNOONNMKHHGFEEEDDDDCCCCCBBBBABBBCCBCBXWWYVTVVXYWWYYZZaYYZXWXZaaceghhggghhffeefeddcfhfbXROLJHFFFFDDEEFGFHIKMNOPPRRRQSTRSTQTTRRSRRSSTSRNPONNLIHGFFEEDDDDCCCCBBBBBBBBBBBBBBBWVYWVTVVWXWXYYYZaZZXXYXaZabeghhhhiifffggefdcefgdaUPOJIHGFFEDDEEFGHHIKLMOOQRSRSSRRRRRTRRSTTTTSTUSQPNNMKJIGFFFEDDDDCCCCCBBBBBBBBBBBCBBVWYVVVWVXWXYYYaabZYXZYYaaabefghfhhghhgfhhfdbfhecXTPNLIHGGEEDDEEGGHGJLLNNORRQRSSQSRSSSTSSTVTSSRSSSOOOLJIHHFFEEDDDCCCCCBBBBBBBBBCBBBBBWWWVTWVWXWXYZZZaaYYXYYYaaacffghfghhhhhhfgfdcfigaUSPMKHGGFEEDEEEFFGHJLOMNPQRRSSSTSRRRTSTSRTUUSSRTRPPOMJHHGFFEEDDDCCCCCBBBBBBBBBBBBAABXXVTTVXXXWXYaZaZZZXWZYYZZacdfghhiihggghggedcggeXSQNKLIGFFEDDEEEFFHJJLMLOQRSRSRSRSTRSTRTSTSVTSSRRRQPOLJIGGFEEEDDDCCCCCBBBBBBBBBBBBBBAWWUTUVVWXXXXZaaaYZXXZZXZZacdfghiiiihhggggeddggbVSPNLKIGGEEEEDEFFFHIKKNMNQRRSTSRRTRSTTSTUTTSUUTSSTSOMLJHGGFEEDDDCCDCCBBBBBBBBBBBBBCCBWVUVUVVXWWaaaaaZYYXaYYXYZabcfhhiiiiggggffecehfbVQOOMKIHFFEEDEEEFGHIKLMNQRRRRQRSSSSTSSSTSTTSUUSSSRQOMLIHGFFEEDDDDCCCCBBBAAAAABAABBBBBWVUTVWXYVYYbbaZYYXXZZXXYZaadghhiiihgfgggedeigbZUQNNLKIHFFEEEEEEFFHILMLLNOPQRPPRRTUSSTSTSSSRSTSSQPPONKHHGFFEEDDDDCCCCBBBBBABBBAABBBBBVVTVUUXWXZXaaZaYYYYZYYYYZaadghhhihhgghgeadggfbZUPNLLKJGFFEEEEEFFGHJKLLMOPPQRQQTSUTRSUUSUTRSSTTRRPPNMIHHGFEEDDDDCCCCCBBAABABBBBABBABBYWVVVVXYZaaaaZZYYXYZYXYZZZacfhghihhgfhgabdiifcYVPNLLKIHGFEEDEEFFHIJJKMMNOPQRRRRTUSSTRTTTRQRSUUQPPNMLJHGFFEEEDDDCCCCBBBBAABABBBBBHIBBWVUVVVWXabZaaZZZZYYYZXWYYZcceghhhhighhcackmkedZUONLLKIHGEEDDEEFGHJJKLLMNOPQQRRRTTSUSRTTRSRRSRUQPONLJHHGFFEEDDDDCCCBBBBAAAAAAABBBCCAAVVUVVWXYaaZaaZZZZXYaXXXZZYbcfghghiigfebdejmjfeYSONLKJIHGEEDEEFGHIKKKKLMMPPQQRRSSUTSSTTTSTSSRRRRRMLKIIGGFEEDDDDCCCCBBBBAAAAAAABBBBABATUVWWYYabaaaZZaZZYYYXYYYZZacfgggghhgfbdehkkjgbXROMLKIHGFEEEEEFGIIJKLLLMNPPQQQSSTTSTUTSUUTSRRRRTRMJIIHGFEEEDDDDDCCCBBBBAAAABABBBBBBBAUTUUVYYYZZaZaaaZYXYXZYZZaabdfgghhhhhfcfiknlmhcVRNLKJHGFEEDEEEFIIJKJKLLLMMPPPPRSTTTTVTTVTUTSSSQPQMJHHHGFEEDDDDDDDCBBBBBAAAABABBBBBBBAUSTVWYaYZYZZYZZXWXYXYXZZYZbcfggigghfdcgmpponhbTPMKJIGFEEEDDEFGIIJKJKLMLLMNNOQSTTTUTUTVVTUSSQQPNNLJGHHGFEEDDDDDDCCBBBBBAAAAAABBBBBBBATTVVXYYZYYYaZZYWWYXXYZYXZabceffhhfffccillkojfZRNMJJHGFEEDDDEGHHJKKKLLLNMNONOQRTVTSVTUVTTVTSSQOLKJHGGGFEEEDDDDCDCCBBBBAAAAAAABBBBBAAASTVVXaZZZZZaaZYXWXWXZaYYZZZadffgfffdcchjieifcXPMKJHGFEEEDDEEGGHJKKLLLLMLMKNNQSSTUTUTVVTUTTQQPPMIIIHHGFEDDDDCCCCCCBBBAAAABAAAABBBBBAARVWXaZZYZYZZYYYWWXXYZXXXXXZZefeggddcabefcaYbaTNLJHGFEEEDDDEEFGIIJKMLMLMNLKMPRSTUUVTUVUUURQQQPNMJIJJHGFEDDDDCCDCCCBBBAAAAAABABBBBBBBATVXZZZXXZZZZZYWVXXXYZYXXWYZacdeefeebYZaZYVVWVPLKIHGEEDDDDDEEFHIJKLLLMMLMKLMMPRTUTTUUUTUTQPSPPOMKJIIHFEEDDDDCCCCCBBBBAAAAAAABBBBBBBBATVYYYaYYZYZZZXVWWWWXYYXXXYZacdddedcaXWXWVUVURMKIHFFEDDDDDEEEFHIKLKMLMKLLLLLMPQTUUTUVTUTSRQQPPMLKHIHFFEDDDCCCCCCCBBBBAAAABBABBBBBBBBAUWWZYZYYYZYZYXVVVWYYXXWWWWWZcddddcbaWVUTUSSPNLIGFEEDDDDDDDEEGHIJKLMKLLKLJKLMMQTTTVVSTUTTRPPPOLKJIHGFFEDDDDCCCCCCBBBBAAAAABABBBBBBBBAVWXZZYYXXaZYYXVUWYYYXXWWUVXYacdcccaZVTSRPONLJIGFEEDDDDDDEEEFGHHIKKKLKLKLIKKKMQRUTTUSVUTTRRQPOLKIHGFEEDDDCCDCDCCBBBBABAAABAABBBBBBBAAWYYaZYXXYZYYYWWVXYXXXWXVUWWXZbdbbaZaXSRONLKIGFFEEEDDDDDDEEFFGHIJJKLMLLJJJJJJNPQTTTTSUTTRQQOPOLKHGGEEFDDDDCCCCCCBBBBAAAAAAABBBBBBBBAAXYZaYXXYaZXXXWWVXXXYXVWUUVVXZabaaZYZXTNNMJHGFEEDDDDDDDDDDDDEFGHJKLLKKKKIKJKLNMPRSSSUUSSRRPPONLKIGFFEEDCCCCCCCCCBBBAAAAABABBBBBBBBBBAXZZZYYYYZZXXXWVWXXYXXWWUUUUVYZZZaXXYXXRMJGGFEEDDDDDDDDDDCDDEFHHJKLLLKKJKKKLJKMOQSRSTTTRQQOPOOKJIGFFEDCCCCCCCCCBBBBBAAABBBABBBBBBBAAAWYZZYZYZYYXYWVWXXWYXXVVTUUUVWYYZaYZZXYXNGGFFEEEDDDDCDDDDDDDEFHHJLKKLKJJLJKLJKLNORSTTRRQQPMOOMLIGEEDDDCCCCCDCCCBBBBABAABBBABBBBBBBBAAYaaYYZZZYXWWWVWWXYXXXWVUUTTVVWXXYZYYWXYVJEFFFEEEDDCDDDDDCDDFFHIKLKJKKJJKJKKJJLLNRQSSSQPPONONLJHEEDDDDCCCCCCCCCBBBBAABBBAABBBBBBBBBAAZZYXXZYZXWXVVVWVYZYXWVVUUUSUVWXXYXXXXYZYUNHEEEEEDDDDDDDCDDDFGHJKLKKKLJLKJKKKJKLMOSSRRRROOPNMKIGEEDDDCCCCCCCCCBBBBABBBBAABBBBBBBBBAAAYYZXXXYZYXXWUVWXYYYWVTTTUTSTTVWXYYYYZZYXWWUPLHGEEDDDDDDDDDEGHIKKKKLLKKLKJKJJJKLLMQRRQRPONONLJHFEDDDCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBABAZYXYYXYYYWVWVWWXYXWVVTUVTSTSSUVXYXXYYZYVVVUVVSOJFEDDDDDDDEFHIIMMKKLLJLJKJKJJJKKLLOQQQQOOMMLJHGEEDDCDCCCCCCCCCBBBBAAABBBBBBBBBBBBBBAAYXXWYYZZYXWVVWXYXXWVUUTVTSQPQUUVWWXZZZYWVVUWVURNIEEDDDCCDEGIIJLMJKLKJKJIIKJKKJLMMNQQPOOMMOMIGGFDDDCCCCCCCCCCBBBBABBAABABBBBBBBBBBBAAYXXXYYYXXWWWWWXYXWWVTTUVSRRQRRRVWVYYZYWVVVVWVUSPLGEEDDDDDEFIKLLMKLKLKLJIKKIKKJKLMMNONNOMMMLIFFEDDCCCCCCCCCCCBBBBABBBBBBBBBBBBBBBBBAAYXYZYYYXWUUWWWWXWVWVTUUUSRQPQPRVVWYYYWVWVUVVTUSQMIFEEDDDDEFGIKKLKKLLKJIJKJJKKKKLLMMNNNMLMLKIFEEDDCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBAYZYYYYYXVUVWWWWXWVVUSTUTRQPPOOPTUWYXWVUUVUVVUTRPMKIGEEEDDEFGIJJJLLKKLLJJLJKLKKKLLMLLMKLLLLLJEDDDCCCCCCCDCCCCBBBBBBBABBBBBBBBBBBBBBAAYZYXXYWWVVVWWWXWVWUUUUTSRRQPPOORUWWUTUUVTTUUTSSQMKJIGEEEEEFGIJJJJJHJLMJJKJLLKJKMKKLMLKLKKKLIEDDCCCCCCCCCDCCBBBBBABBABBABBBBBBBBBBBAAYXXXXWWWVVVVXXWWWUTVUUSRPPOOONORTUUTSTUVTTUTUSTQMLKJIGFEEFFHIJKKJIIIJJJJLKMMKILKKLLKKJJJKJJHEDCCCCCCCCCCCCCBBBBBABBBBBBBBBBBBBBBBBBAXXXXXXXWVVVVWVWWVUUUUTQQPOOOOONPQSTSSSSSSTUTTTTQNNMMLJHGFGGHJJKKKJIHHHIJLLLLKKMKMKKIJJIJKIKHDDCCCCCCCCCCCCBBBBBBBBBABBBBBBBBBBBBBAAAXXXXYYWVVVVWWWVVVVUTTSQRPOPOPONNOQSRSTSTTUSRTVTPPPPPOMJHGGHJLLKJLJJJIJIJIJKKKKKMKJKIKIHIIIHFCCCCCCCCCCCCCCBBBBBBABBBBBBBBCCBBBBBBBAAXWXWXWVVVVWVVVWWVUTTTRQQPOQPQOLKNRRQRSTTRNLLLPTSPMMNPOOKIIJKKLLLKJKKJKJJJKLJKKLJLMIJJHJIHGHFDCCCBCCCCCDCCCBBBBBBBAABBBBBBBBBBBBBBAAAWXYXXWVVVVVUVVWWVUUTSRQQPOPOOKIHMRQQRQSQKIIIIIJPSQQPPNKJJJKKLLLJJJJJKKKKJKJKKKKKJKKKIHHHGHHECCCCCCBCCCCCCCBBBBBBABBBBBBBCCBBBBBBAAAAWXXXXWVVVVVVVXVVUUUSRPQPONPPNHFGLPQQPPRLHIIIIHHHJNPLHGGHIKLLMMKKJJJJLKKKKKJKJJIKKKKIIIHIGHGECCCCCCCCCCCCCCBBBBBBBBBBBBBBBBCCBBBBABAAWXXYWVVVVVVVWWVVUUVRRQPQPOPMHFFGLPPPOONIHGHHHHGGGFEEFFFGIKKLMKKKJJJLKKKMKKKJJHIJKKJKIIHIGFFDCCCCCCCCCCCCCBBBBBABBABBBBBBBCCCBBBBAAAAXXXXWWVVVVWUVUVVVUSRROPPPQPIGGGGKPPONMKGGGGGHGGGGFFEEEFGHKLMLKJIJJLMLJLKJKLJJKJIJJIIHGGHFEEDCCCCCCCCCCCCCBBBBBBBBBABBBBCCBCCBBBABAAAWWWVWVUVVWWVWVTUVTRRQPQOSQKGFGGGJNONLKIGFFFGGGFFFEEEEEFHIJKMLJIIJKJKJJKKLKKJIIKKKJJGIGHGFFEDCBCCCCCCCCCCCBBBABBBABBBBBBCBCCBBBBABAAAVWVVVVVWVVUVVUUUTRSQOQQRRLHFGHGGIMNNKIFFFEEEFFFEEEEEEEFGIJKLKIIHIIJJIKJKKIIJHIKKLKHGHFEEDEFDBBBBCCCCDCCCBBBBBBBABBBBBBBCBCCBBBBAAAAAVWWWVUVVWWVVUUTTRRSPPRSQLHFFHHGILMOMKIGEEEEDDEEEEEEEEEFGHKKKJHHHJIJIIJKKKIJIHJKJJIHHGDDCCDECBBBCCCCCCCCCBBBBBBBBBBBBBBCCBCCBBBBAAAAAVVVVUVUUVVVVVUSSSRQQQQPLHFFGHGFINLMMLJIJLHGHGFGFEEEEEEFHIJJKIHHIJJJJJJJKJIIHIJKJKIHHFDEDCCCCBBBBCCCCCCCBBBBABBBBBBBBBCCCCCCBBBAAAAAAVVUUUVTUVVVTUTSSRRQPPOLIHGGHHGGJNLLLLKLNNKMNKJKIHFFFFFFHJIIJIIIJIHHJJJIJHGGIJKJKJHGGDEEDDCCCBBBCCCCDCCCBBBBBBBBABBBBBCCCCCBBBBAAAAAAVUVUTUVUVVUTUSSTRRRPNNLJJIIIHHIRgXKLKKMNLKMLKKKLLKJJIIIKLKKJIIJJKJIJJJIIHGIIKLKKHGGFDDDDCCCCBBBCCCCCCCBBBBABBABBBBBBCCCCCCCBBBAAAAAAVUTTTTTVVVUUSSTSRQPNMNMKJIJIHHLUaUKLKLNNMMMNNNOSRPNLMMONMMLLLLLKKJJIJIIIIHIJKKLIGGGEDDDDCCCCCBBBCCCCCCBBBBBBBBBBBBBBCCCCCCBBBBAAAAAAVVVUTTUVVVUSRTTSQPOMMNMKIIIHHHIQVNJKKLMOMLMOQPQWaTRPTQXRMQMNPMMNLKLKKJIHHHJLKLJHGFEDDDEDCCCCBCCCCCCCCCBBBBBABBBBBBBBCCBCCCBBBBAAAAAAVVUUTSTTUUTSSSSQQQONOMLJIJIHHINUXRLJKMMNMJLLNNNRONOPVRTNMQNOQMMNNMMLLKHHIIKLKLIGFEDDDDEDCCCCCBCCCCCCCBBBBBBBBBABBBBBCCCCCCBBBBAAAAAAVUVVVVUUUTTTSSSPPPONOMKIIIHHHTpsrfZPJLMNMJJJKLMLJKLKMNMLLPNLNNMLNJKKKIJJJJKLLKHFEFEDDEEDCCCCBCCCCCCCCBBBBBBBBBBBBBBCCCCCCCBBBBABAAAAWVUUVUTUTSSSSRQOOPNNNKIIIIIIIc243orlLKMNNKIIJJJJJKLMLLLLLMLLMLLLJJLJJJJKJJLLKIGFEDDDDEEDCCCCCCCCCCCCBBBBBBBBBBBBBBCCCCCCCCBBBBAAAAAAUVVUUSTUTRRSRRPNOOOOMLJIJIHIJXjkhhlmPIMMNLIIIJIJJJKLKKKKKLLKKKKJIJIKJIJJKKLLKHGFDEDDDEDDCCBBCCCCCCCCBBBBBBBBBBBBBBBCCCCCCBBBBAAAAAAAVTUVUTTUTRPPPPOPONONKJHIIIJIIOaZXYXVPJLMNNIHIJIIJJKKLKKJKLJJKJKIIJJJJIIJKLKKIGFDDEDDDDDCCCBBCCCCCCCBBBBBBBBBBBBBBBCCCCCCCBBBBAAAAAAAUTUVTSUUURQNMONNNOPLJIIIIJJHHMdcdVOVVJKMONLIHIIJJJKKKJKKJJJJJJJHKKJJJJJLKKKJGFEDFEDDDEECCBBCCCCCCCCBBBBBBBBBBBBBBBCCCCCCCBBBBAAAAAAAUUVUUTUUTRPMNMMMOOOJIIGGHIJIHLVVVMJUWJJLOOOKHHHIIJJJJKKKKJKJJIIJJJJJIIJLLKJIFFEEFDDDDDDCCBBCCCCCCCCBBBBBBBBBBBBBBCBCCCCCCBBBBAAAAAAAVUWUUUVURPNOOOONOPNIGFFHIJIHGHHHHGGMOGHLNOONKGGGHHIJKJJJIJIJKJKJJJJIJKJJJJIGFGEEDDCDDECCCBBCCCCCCCCBBBBBBBBBBBBBBCCCCCCCBBBBBAAAAAAAVWWWWWUSQQRRPOMNNMJGFFGHIIHHGGGGFFFFFFHKMNONMJGFGHIIIJJJIJJKJJJJJJIJJJJJKJGHGFFEDDDDEECCCBBCCCCCCCCBBBBBBBBBBBBBBBCCCCCCBBBBAAAAAAAAXWWXXWTQQRRRQONMMLJHFFGHHHHGGGGFFFFFFFFKNPOONMJHGHHIIIIIIKKIJJKJJKJKKIJKJIGHGFFDDCDDDDCCBBCCCCCCCCBBBBBBBBBBBBBBBCCCCCCCBBBBAAAAAAAAVWWWWUSRRRRSQQONMLIFFGHHHGHGGFFFFFFFFFFIMPQQPNMKIHHIIIIKIJKJKKJJJJILKJJIHGHFGFDCCCDDEDCBBBCCCCCCCCBBBBBBBBBBBBBBBCCCCCCBBBBBAAAAAAAAWWWWTTSQRSRRQQOOLKHGGGHHGGHGGFFFFFFFFFFHLOPQQPPNMLKJIIIJHJJJJJJJJKKJKKIIIIIGHFDDDCDDECBBBBCCCCCCCBBBBBBBBBBBBBBBBCCCCCCBBBBAAAAAAAAAWWXWTTSRTSRQQPNLJKIHGGHGGHGGGGFFFEEEEFFFJPQQQRRQQQPNMKKJJKJJJJJKKKKJKJIJJIHHGFDDCCDEECBBBBCCCCCCBBBBBBBBBBBBBBBBBCCCCCCBBBBAAAAAAAAAXWXVSSSSTSSSQPNLLLHHFFGHHIGGFFFFFEEEEFFFHOQQQSTTTUTTRONMKKLJKJJKKJKJJJJIIIIGGECCCDEECCBBBCCCCCCCBBBBBBBBBBBBBBBBCCCCCCBBBBAAAAAAAAAAXXVUUUTSTSRRPONMLJIHFFHIIIGFFFFFEEEEEFFFFMPQSTTTUUUUSRSROMMKKKKKLLLLLJJJJIHHGECDDEDEDCBBBCCCCCCBBBBBBBBBBBBBBBBBCCCCCCBBBBBAAAAAAAAAYWUVVTSTTSRQOOOLJJJHFGIKHGFFFFFFEEEEEEFFEJNPPQSTTTUUTUUTTRQONMLLLMMLLKKJKIHHFDCDDDDDCBBBBCCCCCCBBBBBBBBBBBBBBBBBBCCCCCCBBBAAAAAAAAAAXUUWUTTTSRRQPPOKJKJHGILJGFFFFFFFEEEEEEFFFHNPOQRSSRSRSSSUVTTSRRQPOOMMLKKJKHHGFDDDEEDDCBBBBCCCCCBBBBBBBBBBBBBBBBBBCCCCCBBBBBAAAAAAAAAAXVUVVUSSSRQQOOMKKKIHHKKHGFEEEEEEEEEEFFFFFHMQRRSSSTTSRRTSTSRQQQQQQNNNLLMLKHGGEEEDEDCCBBBBBCCCCBBBBBBBBBBBBBBBBBBCCCBCCCBBBBAAAAAAAAAAXVWVUUUTQQPOOMKJJIIHJLJHFEEDDDDDDDEEFGFFFFKPQSSTTTSSSTTRSSRSQRPQPOONMLLKJIGFEEEDEDCCBBBBBCCCCBBBBBBBBBBBBBBBBBBCCCCCCCBBBAAAAAAAAAAAVWWVUVUTRRPPPMLLIIIIJJIGFEEDDDDCCCDDEGGGFFIPRRRTTRRTTUUTTSTSRROPPNNMLLJJIHFFEDDDDCCBBBBBBCCCCBBBBBBBBBBBBBBBBBBCCCCCCBBBBBAAAAAAAAAAXXWVTUUSRRQQPNNKJIIHHIHFEEDDDDCCCCDDDFHGGGHNQQRSTRRSRSSRRSSSSRPQPONMLJJHGFEEECDDDCCBBBBBBCCCBBBBBBBBBBBBBBBBBBBCCCCBBCBABAAAAAAAAAAAYYVUWVTSSSQOMKJJIHHHIHFEEDDDDCCCCCCCDEFGGHILPQRRRSRQSRRPPSRRRPQQOOOMKKIHGFEEDCDCCCBBBBBBCCCCBBBCBBBBBBBBBBBBBBBCCCCCBBBABAAAAAAAAAAAYXWXWVTRRPONMJIJHGGIIHGFFEEDDCCCCCCDDDEFHHIHMOQQRRPPQPQPQQQQPOPPNONLKKIHGGDCCCCCCCCBBBBCCCCCBBCBBBBBBBBBBBBBBBCCCCCCBBBABBAAAAAAAAAAXXYXVUSRPNNMKIJJHHJLLJIHHGFEEDDCCCCCDDEGHHGFINPQQQPQQPQPOOPOONOONMLLJJIGGFEDDCCCCBBBBBBCCCCCBBBBBBBBBBBBBBBBBBCCCCCBBBBABAAAAAAAAAAAWWVVVTRRPOOMLLLKKLMNMKJJIHGFEEDDCCDDDDFGGGGGGKOQPPOPPQQONOOONMMMMMLKJIHFFEEEDCCCBBBBBCCCCCCCBBBBBBBBBBBBBBBCBBCCCCCBBBBBBAAAAAAAAAAAWVVVTRRQQPPPPONMMONNMKJIIHGFEEDDDDDDDEFGFFFFFHLONNOOOONNOPOONNNMMLLKIHFFFEFEDCCCCBBBCCBCCCCCBBBBBBBBBBBBBBBCBBCCCCCCBBBABAAAAAAAAAAAYXVSQRRRRQRQPONMMNMMLLJIHGFEEDDDDDDDEEFFFFFFFGIMNNMMNNNMNNNNNNMMLLKJJHFFEEFEDDCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBCCCCCCBBBBABAAAAAAAAAAAXVTRRTTSSSQOONMLMNLLKKIHGFFEDDDDDDDEEEFFEEFFFGJJKLLMNMMMLLMMMLKLKLJJJFEEEEEDDCDDCCCCCCCCCCBBBBBBBBBBBBBBBBCBBCDCCBCBBBBBAAAAAAAAAAAAXTUVUTTTSQONNMLLLLKKKJIHFFEDDDDDDDEFFFFEDEEFFGIKKKLMMMLKJMLLLLKKJKJJHEEEEEDDDDCCCCCCCCBCCCBBBBBBBBBBBBBBBBBBBCCCCCCBBBBAAAAAAAAAAAAAVVVUUVTSQONMMNKKKKKJJIHGFEDDDDDDDDEFFGGEDEFFGHILMMNOMMLKLMLKLLKJJLJHGFEDDDDEDDDCCCBBBBCCCCBBBBBBBBBBBBBBBCCBBCCCCCBBBBBAAAAAAAAAAAAAUVUTUSQPNNMKLLKKKJJIJIGFEDDDDDDEEFFFGGFDDEFGHHKNONMPQOMLMLLJKKKJKKIIHEEDEDEEDCCBBBCCCBCCCCBBBBBBBBBBBBBBBBCBCCCCCCBBBBAAAAAAAAAAAAAAUUTRRQRQOONLLKKKKJJJIHFFEDDDDEEFGFFGGFDDEEFFGHKNPPPPPOOONMLLLMKLLKJIFEEDDDEDCCCCCBCCBBBCCCBBBBBBBBBBBBBBBCCBCDCCCBCBBBAAAAAAAAAAAAAAUTSRQPQPONNMLKJKKJJJIGFFEDDDEFGGGGGHGEDEEEFGGJLOORaaQPNNOONNMMMMLKIGFEDDCDDDCCBCCCBCBBBCCBBBBBBBBBBBBBBBCCBBCCCCCBBBBBAAAAAAAAAAAAAAUTQQQPPPONMLMMLKKKKJHGFFFEEFFHIHGGHGFEDEEEFGGJKMLMQTQPONNMNNNNNNLJJGFDDDDDEDCCCCCCCCBBBCCBBBBBBBBBBBBBBBCCBBCCCCCCBBBBAAAAAAAAAAAAAATSRPOPOOPPNMMMLLKKKJIHHGGGGGHIIGGHIFEDDEEEFGGIMVVPVTPPPONNNMNNNNMJHGEDDDEEEDCBCCCCCCBBCCCBBBBBBBBBBBBBBBBCBBDCCCBBBBBBAAAAAAAAAAAAAARRPOPQQOOOOMMLKKKKJIIIHHHHGHIIGGGIHFEEDDEEFGHJNdeUZVPPPONNMONONMLJHHEDDEEEEDCCCCCCCCBBCCCBBBBBBBBBBBBBBBCCBCCCCCCBBBBAAAAAAAAAAAAAAARQOOPQQOOONMMLKKKJIHGFFFFGGHIHGGIIGEEEEDEFGHIKNRPMPPPPPNNMNNMMMLKJHFFDDEEFEDCCCCCCCBBBCCCBBBBBBBBBBBBBBBCCBCCCCBCBBBBAAA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JIIHHGGGIJKJHIRYaZZaaaZZZYZXcxtaQRSUpYKMNMNLanPLJKIHEFFDFFEDGIGFEFIJGEDCCDEECBCCCCCBBCCCCCCCBCCCCBCBAABBBAABABBBBBBBBABBNMLKKKIHIIJJIIIHGGGHJKKIGMWbbZabaZbZYYXXWXXPOTSNVVMNPQPKPXMIJJIGGHFEEEFFJLGGEGLMIFDFDDDDBBBCCCCBBCCCCDCBBCCCBBBBBABCBBABAABBBCBBBABBMLKKKJIHIJJIIIHGGGGIJJJGGRYaccbcaaaZZZZYVXVRSYWMMNLMJNMJKJIIHJHGHMNDDEGHHJFJIFGGHDCDEECBBBCCCDDBBCCCCCCCBCCCBBBBBABCBBBBAAABBBBBBBBBLKKJJJIIJJJIIHHHGGHIJJHFKVZbcdccbaaZZZZYWieRSUUMOPKNVOLKJLKKJIIHGKLDEJGGIJEDHIHFDCCDEEDCBCCCCCCCCCCCCCCDCCDCCBBBBABBBBBBBAAABBAAABBBLKJJJIHJJJJIIHHHGGHJJIFFOXacdddcccaZaaZYXeWOSQNNMMJNaTMKKNLLHFHIGGDDDHILHEDCDGFFECDGEDEFDDCCCCCCDCDCCCCCCCCCCCBBBAABBBBBAABBBBBBBBBBLKJJJIIJJJJJIIHHGGHIIGEHSZabddddcdaZaZZXXWRNPLMNPNIJLLJLLLJJJFHGEGFCDFKIEEDDHHFIIDGFDDCFEDDDDDDDDDDCCCCCCDCCCCBBBAABBBAAABBBBBBBBBBCMKKJJIJJJJJIIHGGGHIIHEELVZbddddddbbaaZZYTQPOPJQPNOKIMLIKKNKIIGJKGGHEDKOIFIGGHGFHHHIGEEEEEDDDDDDDDCCCCDCCDCCCCBBBBABBBBBAABBBBBBBBBCCLJKJIJJIJIIHHHGGHIJIFDGRZaacedcdcbaaZYXWQNPRPIjmNMJKMLHJLleIIFGGFDEFGIFEFGKHHGEFHHJLFEFGGCDDDCDEDCCDCCCCCCCCCBBAABBBABBBABCCBCCBBBBBKKLJIIJIIHHHHHGFGHIFDDJVacbceeddcbZaZXXWSQRQMITYNLLMNOJILUYMHFFDDDFHLHEFHGMJFJdkUIIJEEFHGCCDDDDDCCCCCCCBCCCCCCBBBBBBBBBBBBBBBCCBBBBBKLLJIIJIIHGGGGGGHIHEDEOXZbbdeddddbaaYYWVVUTOIJMNLJLLNOJGKMJIEFFEEFIHIGDHJJQLHGl/xMEKJGIHDCCDEEDCCCCCDDCBCCCCCBBBBCCCBBBBBABBBBBBBBBCKLLJIIIIJHGGGGGHIIFDDHSXZabddcddcabZXXVVUROLLMORJMVMJLJKNMJIDEFEEGPIFHEFIPMEKLLWYJEEJNICCCEEEEEDCDEDDDDCCDCCBBBCBBCBBDECBBBBBBBBBBBCKLKJJIIJJIHIHGGGIGDDEMWZaaccddddbbaYYXVUSQMMOMNQJNXNLMLNMKJIECEIHJRHCGIIKNEDGNNIFDIOKLOFCHMFCDEFCFFCCCCDDCDCCBBCCBBBBCCCBABBBBBBBCCCLLKKJIIIJIJJIHGHHEDDGRXZbcdcdddcbbaZYXVTUQLOQLMOJJQOMKONJIJKEEGKKHECDGMKGDDEHKOMDFJMIFIIDKQENNEGDDGGCDCDDCDCCCCCBBBBCBBBBBBCCBCCBBCDLKKKJIIIJJJJIHHHFDDELWXYbbcdccdbZaZYXVTTSRNYrRKQKJOOKIMONJKMGHHGKGCEJJJKHDFbUJKQHGHGLOGIFIGDVsWIEEHIDEEDDCCCCDCCBBABBBBBBBCCCBBCBCCCLKLLJJJJJJJIHHHGDDDGRYZacbbddcdaZZYYWUUSRQOVlUOPLLMMIILLNKLKHHGGGHEHIFGJKFHQOKHKJKNHKleKGJJGGaaJDEEDEEFDDCCCBCCBBBBCCBCCBCCDCCCCCBCCJJLLKKJJKKJHHHHEDDEMVYZbbbbdcbbaaZYYVTTSRQQSQQUMMLMNJJLKKLJIHHJGFGFHKVNHMHJHKRIIHLNJJhxSFILIIJJEDDEFEEEDCBCDCDCABBBBBBBCCCCCBCEFDBBCJJKLKKKJJJIHGHFDDDHRXZZaaabdbabbbaYWVUTRRQPPPPLPNKNOJIJLKIGGIIIGFGIKJr1ULHMJINMKGFMNR0nJEDGKJGDDDDEFGEDCCDDDCCDCBBCBBCBBCBCCBCFEDBBBJJKKLLLJJJHHHGEDDEMWZYZbbbccbaaaaZYWUTSSQPOOONJPOJLKJMMNHFGHIGFGHDHKFPtjMEJKIPYKEFKRSQKDEIGHJHDDDFFFEFHCCEECBCCECCDCBCEDCBBCCCCCBCBBJJJKKKLKJIIHHFDDEISXYZZZabbbbaaaZWWVTSSRQPPPNMKNMOSLLKMOIGGGKJIJFCFMMLQPHEKSOOKEFJONLMDDHKHGEHIDEHFEEEGEDFDCCDDEDBCCBBEECBBBCCBCBBBBKJIJKKLKIHHHGDDDFOVYYYZZaaaaaZZZYXWVTRRQQPPPNMLONSTLLJJKIFHIKJFEDEHMPQHEEGMOKNFFMIReJKGEJHDOlQLFHHFDFHFGDFDCBDGEEBCCCCCDCBBBBBBBBBCCKJIJJKKJIHGGEDDEJTYZYXZabZYZZYYYXWVUTSRRPPPONNLMOOKMPIHJHIMKIHECFHIJJMFDHGILGIGHTTOsTMJFJGDGhcNFHHEDHdKFDFFCBEFFDBBBBCCBBBBBBBBBCCCCJJJIJJJIHHHFDDDFPWYZYZbbaZZYXYZXWUUUSRQQPPPOOOMMMMKNLHJQKNKHGHEEKGGHFHFGGJLKKLGIdsFJONHEMIDDINJCFIFELwSEDCFFEDEEBBBBBBBBBBBBCCCCCCDCJKJIJKJHHGGECDEKUXXXZabbbaaYYYWWVUTTRQQPPPOONNNMMMKMLLMLLMHGFIEHJEHJFJHLLKJKVLCIQQFGLLDDJLGGUPECDHIGJZQDCCBDFDCBBBBBBBBBBBBBCCCDDDDDKKKIJJJHGGFDDDFPXZZYZaaaZaYXXXWVTTSRQQPOPPONNNNNNLKKNOJHMJFGGHCHKFKLJJEEKLLJHEDEILNJHEDDEHHKJGDDDDGKHDECCBBBCCBBBBBBCCCCCCCCCCCDDDDDKKJJIJJHGGDCDEKUZaYYZaZYZaYXXVVUUSRQQPPOPONNNNMNMLKKKJHHLJFGHECELIKKIFEKGGHEEEDDDGIGEDDDDEFFEDCCDDDEFDBCCCCCCCCBBBBCCCDDCCCDDDDDDDDD';
+
+    const img = new Image();
+    img.src = 'photos/p01.jpg';
+    img.onload = () => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let raf = 0;
+
+      function build() {
+        const cssW = canvas.clientWidth || canvas.parentElement.clientWidth || 680;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const W = Math.round(cssW * dpr);
+        const H = Math.round(W * img.naturalHeight / img.naturalWidth);
+        canvas.width = W;
+        canvas.height = H;
+
+        const cellW = W / COLS;
+        const cellH = H / ROWS;
+
+        // the photograph, pre-rendered at output size
+        const photo = document.createElement('canvas');
+        photo.width = W;
+        photo.height = H;
+        photo.getContext('2d').drawImage(img, 0, 0, W, H);
+
+        // the typeset layer, drawn once: continuous text, brightness from the pixel beneath
+        const glyphs = document.createElement('canvas');
+        glyphs.width = W;
+        glyphs.height = H;
+        const g = glyphs.getContext('2d');
+        g.font = Math.ceil(cellH * 1.1) + 'px Georgia, "Times New Roman", serif';
+        g.textBaseline = 'middle';
+        let t = 0;
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            const ch = TEXT[t % TEXT.length];
+            t++;
+            const lum = B64.indexOf(LUM[r * COLS + c]) / 63;
+            if (lum < 0.08 || ch === ' ') continue; // the figure emerges from darkness
+            g.fillStyle = 'rgba(242,237,227,' + Math.min(1, Math.pow(lum, 0.58)).toFixed(3) + ')';
+            g.fillText(ch, c * cellW, (r + 0.5) * cellH);
+          }
+        }
+
+        const ctx = canvas.getContext('2d');
+        function frame(mix) {
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = '#0b0a09';
+          ctx.fillRect(0, 0, W, H);
+          if (mix > 0.004) {
+            ctx.globalAlpha = mix;
+            ctx.drawImage(photo, 0, 0);
+          }
+          ctx.globalAlpha = 1 - 0.8 * mix;
+          ctx.drawImage(glyphs, 0, 0);
+          ctx.globalAlpha = 1;
+        }
+
+        cancelAnimationFrame(raf);
+        if (reduced) { frame(0); return; }
+        const PERIOD = 7500; // ms, one full breath
+        const HOLD = 0.6;    // fraction of the loop spent resting on the typeset page
+        function tick(now) {
+          const p = (now % PERIOD) / PERIOD;
+          let mix = 0;
+          if (p > HOLD) {
+            const q = (p - HOLD) / (1 - HOLD);
+            mix = 0.5 - 0.5 * Math.cos(2 * Math.PI * q); // one eased breath into the photo and back
+          }
+          frame(mix);
+          raf = requestAnimationFrame(tick);
+        }
+        raf = requestAnimationFrame(tick);
+      }
+
+      build();
+      let rt;
+      window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 200); });
+    };
+  })();
+</script>
+
+</body>
+</html>
