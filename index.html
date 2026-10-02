@@ -29,61 +29,67 @@
 
   /* ---------- intro ---------- */
 
-  /* one woman, three ways: the triptych fills the first viewport edge to edge */
   header.hero {
     height: 100vh;
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
-    margin-bottom: clamp(70px, 9vw, 140px);
+    position: relative;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 var(--margin);
   }
 
-  .triptych {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2px;
-    min-height: 0;
-  }
-  .triptych figure { overflow: hidden; line-height: 0; }
-  .triptych img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .hero-band {
-    text-align: center;
-    padding: 26px var(--margin) 30px;
+  h1, h2 {
+    font-family: "Avenir Next", Avenir, Futura, "Century Gothic", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    text-transform: lowercase;
+    color: var(--ink);
   }
 
   h1 {
-    font-size: clamp(30px, 3vw, 44px);
-    font-weight: 500;
-    font-style: italic;
-    letter-spacing: -0.015em;
-    line-height: 1.15;
-    color: var(--ink);
+    position: absolute;
+    top: clamp(28px, 5vh, 56px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    letter-spacing: 0.34em;
+    white-space: nowrap;
   }
 
   .intro {
-    margin: 9px auto 0;
-    max-width: 760px;
-    font-size: 15px;
-    line-height: 1.6;
+    position: absolute;
+    top: 22%;
+    left: clamp(24px, 12vw, 150px);
+    max-width: 21em;
+    font-size: 13px;
+    line-height: 1.75;
     color: var(--ink);
+  }
+
+  .hero-banner {
+    position: absolute;
+    left: calc(50% - 50vw);
+    width: 100vw;
+    bottom: 0;
+    height: clamp(340px, 56vh, 620px);
+    overflow: hidden;
+    margin: 0;
+  }
+  .hero-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   /* ---------- section headers ---------- */
 
   h2 {
-    font-size: 28px;
-    font-weight: 500;
-    font-style: italic;
-    letter-spacing: -0.01em;
+    font-size: 13px;
+    letter-spacing: 0.22em;
     color: var(--ink-live);
     transition: color 1.6s ease;
     padding: 0 var(--margin);
-    margin-bottom: clamp(36px, 5vw, 70px);
+    margin-bottom: clamp(28px, 4vw, 48px);
   }
 
   .sub {
@@ -98,10 +104,10 @@
 
   .spread {
     padding: 0 var(--margin);
-    margin-bottom: clamp(90px, 11vw, 160px);
+    margin-bottom: clamp(56px, 7vw, 96px);
   }
 
-  .gap-l { margin-bottom: clamp(110px, 13vw, 190px); }
+  .gap-l { margin-bottom: clamp(72px, 8vw, 120px); }
 
   figure { line-height: 0; }
 
@@ -110,7 +116,7 @@
     height: auto;
     display: block;
     cursor: pointer;
-    box-shadow: 0 2px 40px rgba(25, 22, 18, 0.28);
+    box-shadow: 0 1px 16px rgba(25, 22, 18, 0.16);
   }
 
   .text-portrait canvas {
@@ -119,7 +125,7 @@
     height: auto;
     aspect-ratio: 1152 / 2048;
     background: #050505;
-    box-shadow: 0 2px 40px rgba(25, 22, 18, 0.28);
+    box-shadow: 0 1px 16px rgba(25, 22, 18, 0.16);
   }
 
   .center { display: flex; flex-direction: column; align-items: center; }
@@ -127,20 +133,20 @@
   .left figure  { margin-right: auto; }
   .right figure { margin-left: auto; }
 
-  .w-xs figure { max-width: 540px; }
-  .w-s  figure { max-width: 800px; }
-  .w-m  figure { max-width: 1150px; }
-  .w-l  figure { max-width: 1360px; }
-  .w-cover figure { max-width: 860px; }
-  .w-robe figure { max-width: 960px; }
-  .w-canvas figure { max-width: 680px; width: 100%; }
+  .w-xs figure { max-width: 340px; }
+  .w-s  figure { max-width: 500px; }
+  .w-m  figure { max-width: 680px; }
+  .w-l  figure { max-width: 840px; }
+  .w-cover figure { max-width: 460px; }
+  .w-robe figure { max-width: 560px; }
+  .w-canvas figure { max-width: 420px; width: 100%; }
 
   .vh { display: flex; justify-content: center; }
   .vh figure { width: auto; }
   .vh figure img {
     width: auto;
-    max-width: min(92vw, 1300px);
-    max-height: 92vh;
+    max-width: min(64vw, 720px);
+    max-height: min(60vh, 640px);
   }
 
   .bleed { padding: 0; }
@@ -149,7 +155,7 @@
   /* mint, on paper: double-page spreads of the printed issue */
   .paper {
     position: relative;
-    max-width: 1280px;
+    max-width: 880px;
     margin: 0 auto;
     aspect-ratio: 3 / 2;
     background: #f6f2e8;
@@ -201,8 +207,34 @@
     justify-content: center;
   }
   .pair figure { flex: 1 1 0; min-width: 0; }
-  .pair.narrow { max-width: 1400px; margin-left: auto; margin-right: auto; }
-  .pair.wide   { max-width: 1400px; margin-left: auto; margin-right: auto; }
+  .pair.narrow { max-width: 780px; margin-left: auto; margin-right: auto; }
+  .pair.wide   { max-width: 920px; margin-left: auto; margin-right: auto; }
+
+  .spain-collage {
+    max-width: 780px;
+    margin: 0 auto;
+    columns: 3;
+    column-gap: 6px;
+  }
+  .spain-collage figure {
+    margin: 0 0 6px;
+    break-inside: avoid;
+  }
+  .spain-collage img {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: none;
+  }
+
+  .closer { margin-top: clamp(80px, 12vw, 160px); }
+  .closer img {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: none;
+    cursor: pointer;
+  }
 
   .row3 {
     display: flex;
@@ -220,7 +252,7 @@
   .overlap-up.right figure { margin-right: clamp(12px, 8vw, 140px); }
 
   /* the show, as a contact-sheet cluster */
-  .cluster { padding: 0 var(--margin); }
+  .cluster { padding: 0 var(--margin); max-width: 1000px; margin-left: auto; margin-right: auto; }
   .cluster .crow {
     display: flex;
     gap: 14px;
@@ -239,9 +271,9 @@
 
   /* a quiet footnote, set as a colophon under the robe's right edge */
   .footnote { display: flex; flex-direction: column; align-items: flex-end; }
-  .footnote figure { width: 100%; max-width: 400px; }
+  .footnote figure { width: 100%; max-width: 260px; }
   .footnote p {
-    max-width: 400px;
+    max-width: 260px;
     margin-top: 12px;
     font-size: 12px;
     line-height: 1.5;
@@ -320,19 +352,20 @@
   /* ---------- mobile ---------- */
 
   @media (max-width: 680px) {
-    header.hero { height: auto; }
-    .triptych { min-height: 78vh; grid-template-columns: 1fr; }
-    .triptych figure:first-child, .triptych figure:last-child { display: none; }
-    .hero-band { padding-top: 22px; padding-bottom: 26px; }
+    header.hero { height: 100vh; }
+    .intro { position: absolute; top: 20%; left: var(--margin); right: var(--margin); max-width: none; }
+    .hero-banner { height: 42vh; }
+    .spain-collage { grid-template-columns: 1fr 1fr; grid-auto-rows: 130px; }
     .paper { display: block; aspect-ratio: auto; }
     .paper::after { display: none; }
     .page:not(.margins) { aspect-ratio: 3 / 4; }
     .page.margins { padding: 7%; }
     .pair, .row3 { flex-direction: column; align-items: stretch; }
     .pair figure, .row3 figure { max-width: 100% !important; }
-    .w-xs figure, .w-s figure, .w-m figure, .w-l figure,
+    .w-xs figure, .w-s figure, .w-m figure, .w-l figure, .w-cover figure,
     .w-robe figure, .w-canvas figure { max-width: 100%; }
-    .vh figure img { max-width: 88vw; max-height: 74vh; }
+    .cluster { max-width: none; }
+    .vh figure img { max-width: 100%; max-height: 68vh; }
     .overlap-up { margin-top: -48px; }
     .overlap-up.right figure { margin-right: 16px; }
     .spread { margin-bottom: 90px; }
@@ -346,15 +379,9 @@
 <body>
 
 <header class="hero">
-  <div class="triptych">
-    <figure><img src="photos/p01.jpg" style="object-position: 50% 40%" alt="Veiled portrait in black and white"></figure>
-    <figure><img src="photos/zari.jpg" style="object-position: 32% 30%" alt="Portrait with bindi and gold necklace, looking back over her shoulder"></figure>
-    <figure><img src="photos/veil_color.jpg" style="object-position: 62% 35%" alt="Veiled portrait in warm tungsten light"></figure>
-  </div>
-  <div class="hero-band">
-    <h1>Mana’s Very Casual Portfolio</h1>
-    <p class="intro">Hi! I’m Mana. I don’t own a camera, so I borrow my friends’ and follow whatever’s happening: a film set, a magazine shoot, graduation, late-night shows. These are the side quests. Enjoy :)</p>
-  </div>
+  <h1>mana’s very casual portfolio</h1>
+  <p class="intro">Hi! I’m Mana. I’m a student at Stanford studying cs + bio. In my free time I like to take fun photos on friends’ cameras. Enjoy :)</p>
+  <figure class="hero-banner"><img src="photos/p00.jpg" style="object-position: 50% 30%" alt="Gold bangles on a wrist at rest, sari and fairy lights below"></figure>
 </header>
 
 <main>
@@ -368,7 +395,7 @@
       <figure><img src="photos/p04.jpg" alt="A door standing ajar, a figure moving in the bright room beyond"></figure>
     </div>
 
-    <div class="spread bleed fade">
+    <div class="spread center w-l fade">
       <figure><img src="photos/p13.jpg" alt="A slate held up in front of a window, the actor in silhouette"></figure>
     </div>
 
@@ -386,7 +413,7 @@
       <figure><img src="photos/p14.jpg" alt="A gridded softbox rigged in a bedroom"></figure>
     </div>
 
-    <div class="spread left w-l fade">
+    <div class="spread left w-m fade">
       <figure><img src="photos/p05.jpg" alt="Two people on set, seen through a gap in the curtain"></figure>
     </div>
 
@@ -395,7 +422,7 @@
       <figure><img src="photos/p06.jpg" alt="Crew member seated in the garden holding the clapperboard"></figure>
     </div>
 
-    <div class="spread center w-l gap-l fade">
+    <div class="spread center w-m gap-l fade">
       <figure><img src="photos/p08.jpg" alt="The crew huddled at the camera monitor, black and white"></figure>
     </div>
 
@@ -425,8 +452,13 @@
       </div>
     </div>
 
-    <div class="spread bleed fade">
+    <div class="spread center w-l fade">
       <figure><img src="photos/p00.jpg" alt="Gold bangles on a wrist at rest, sari and fairy lights below"></figure>
+    </div>
+
+    <div class="spread pair narrow fade">
+      <figure><img src="photos/p01.jpg" alt="Veiled portrait in black and white"></figure>
+      <figure><img src="photos/veil_color.jpg" alt="Veiled portrait in warm tungsten light"></figure>
     </div>
 
     <div class="spread center w-canvas fade">
@@ -449,11 +481,11 @@
 
     <h2 class="fade">Friends &amp; shows</h2>
 
-    <div class="spread left w-m fade">
+    <div class="spread center w-l fade">
       <figure><img src="photos/p20.jpg" alt="Profile of a woman smiling, black and white"></figure>
     </div>
 
-    <div class="spread bleed fade" style="margin-bottom:0">
+    <div class="spread center w-l fade" style="margin-bottom:0">
       <figure><img src="photos/p19.jpg" alt="Friends behind a Class of 2026 banner, under a balloon arch"></figure>
     </div>
 
@@ -461,7 +493,7 @@
       <figure><img src="photos/p15.jpg" alt="Cupcakes topped with congrats grad toppers"></figure>
     </div>
 
-    <div class="spread left w-l fade">
+    <div class="spread left w-m fade">
       <figure><img src="photos/p17.jpg" alt="Two people greeting each other on the lawn"></figure>
     </div>
 
@@ -488,17 +520,37 @@
       </div>
     </div>
 
-    <div class="spread bleed fade" style="margin-bottom:0">
-      <figure><img src="photos/p23.jpg" alt="Hair mid-whip above the crowd"></figure>
+  </section>
+
+  <section class="zone" data-wall="#9e978d" data-ink="#211f1b">
+
+    <h2 class="fade">spain</h2>
+
+    <div class="spread fade">
+      <div class="spain-collage">
+        <figure><img src="photos/madrid_neon.jpg" alt="Chocolatería San Ginés at night"></figure>
+        <figure><img src="photos/madrid_piano.jpg" alt="A black upright piano beneath shelves of books"></figure>
+        <figure><img src="photos/madrid_court.jpg" alt="Looking down past a railing into a courtyard"></figure>
+        <figure><img src="photos/madrid_alley.jpg" alt="A tiled alley between tiled roofs"></figure>
+        <figure><img src="photos/madrid_hands.jpg" alt="Sculpted hands on a deep red ground"></figure>
+        <figure><img src="photos/spain_red.jpg" alt="Two friends by a tree, one in a red coat"></figure>
+        <figure><img src="photos/madrid_blue.jpg" alt="A white building with deep blue windows"></figure>
+        <figure><img src="photos/madrid_plants.jpg" alt="Pots and a fiesta poster on a plaster wall"></figure>
+        <figure><img src="photos/madrid_facade.jpg" alt="A pale facade seen through blurred glass"></figure>
+      </div>
     </div>
 
   </section>
+
+  <figure class="closer fade">
+    <img src="photos/p23.jpg" style="object-position: center 42%" alt="Hair mid-whip above the crowd">
+  </figure>
 
 </main>
 
 <footer class="fade">
   <span>© Mana, 2026</span>
-  <span>36 photographs</span>
+  <span>44 photographs</span>
 </footer>
 
 <div class="lightbox" id="lightbox">
