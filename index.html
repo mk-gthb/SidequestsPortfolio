@@ -133,20 +133,20 @@
   .left figure  { margin-right: auto; }
   .right figure { margin-left: auto; }
 
-  .w-xs figure { max-width: 340px; }
-  .w-s  figure { max-width: 500px; }
-  .w-m  figure { max-width: 680px; }
-  .w-l  figure { max-width: 840px; }
-  .w-cover figure { max-width: 460px; }
-  .w-robe figure { max-width: 560px; }
-  .w-canvas figure { max-width: 420px; width: 100%; }
+  .w-xs figure { max-width: 365px; }
+  .w-s  figure { max-width: 540px; }
+  .w-m  figure { max-width: 730px; }
+  .w-l  figure { max-width: 900px; }
+  .w-cover figure { max-width: 495px; }
+  .w-robe figure { max-width: 600px; }
+  .w-canvas figure { max-width: 450px; width: 100%; }
 
   .vh { display: flex; justify-content: center; }
   .vh figure { width: auto; }
   .vh figure img {
     width: auto;
-    max-width: min(64vw, 720px);
-    max-height: min(60vh, 640px);
+    max-width: min(68vw, 770px);
+    max-height: min(64vh, 690px);
   }
 
   .bleed { padding: 0; }
@@ -155,7 +155,7 @@
   /* mint, on paper: double-page spreads of the printed issue */
   .paper {
     position: relative;
-    max-width: 880px;
+    max-width: 940px;
     margin: 0 auto;
     aspect-ratio: 3 / 2;
     background: #f6f2e8;
@@ -207,11 +207,11 @@
     justify-content: center;
   }
   .pair figure { flex: 1 1 0; min-width: 0; }
-  .pair.narrow { max-width: 780px; margin-left: auto; margin-right: auto; }
-  .pair.wide   { max-width: 920px; margin-left: auto; margin-right: auto; }
+  .pair.narrow { max-width: 840px; margin-left: auto; margin-right: auto; }
+  .pair.wide   { max-width: 980px; margin-left: auto; margin-right: auto; }
 
   .spain-collage {
-    max-width: 780px;
+    max-width: 840px;
     margin: 0 auto;
     columns: 3;
     column-gap: 6px;
@@ -252,7 +252,7 @@
   .overlap-up.right figure { margin-right: clamp(12px, 8vw, 140px); }
 
   /* the show, as a contact-sheet cluster */
-  .cluster { padding: 0 var(--margin); max-width: 1000px; margin-left: auto; margin-right: auto; }
+  .cluster { padding: 0 var(--margin); max-width: 1060px; margin-left: auto; margin-right: auto; }
   .cluster .crow {
     display: flex;
     gap: 14px;
@@ -271,9 +271,9 @@
 
   /* a quiet footnote, set as a colophon under the robe's right edge */
   .footnote { display: flex; flex-direction: column; align-items: flex-end; }
-  .footnote figure { width: 100%; max-width: 260px; }
+  .footnote figure { width: 100%; max-width: 280px; }
   .footnote p {
-    max-width: 260px;
+    max-width: 280px;
     margin-top: 12px;
     font-size: 12px;
     line-height: 1.5;
@@ -355,7 +355,7 @@
     header.hero { height: 100vh; }
     .intro { position: absolute; top: 20%; left: var(--margin); right: var(--margin); max-width: none; }
     .hero-banner { height: 42vh; }
-    .spain-collage { grid-template-columns: 1fr 1fr; grid-auto-rows: 130px; }
+    .spain-collage { columns: 2; }
     .paper { display: block; aspect-ratio: auto; }
     .paper::after { display: none; }
     .page:not(.margins) { aspect-ratio: 3 / 4; }
